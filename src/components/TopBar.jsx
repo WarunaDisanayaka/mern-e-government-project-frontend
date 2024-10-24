@@ -1,24 +1,31 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom"; // Import useNavigate for redirection
 
 const TopBar = () => {
     const [style, setStyle] = useState(
         "navbar-nav bg-gradient-primary sidebar sidebar-dark accordion"
     );
+    const navigate = useNavigate(); // Initialize useNavigate for redirection
+
     const changeStyle1 = () => {
-        if (
-            style == "navbar-nav bg-gradient-primary sidebar sidebar-dark accordion"
-        ) {
-            setStyle(
-                "navbar-nav bg-gradient-primary sidebar sidebar-dark accordion toggled1"
-            );
+        if (style === "navbar-nav bg-gradient-primary sidebar sidebar-dark accordion") {
+            setStyle("navbar-nav bg-gradient-primary sidebar sidebar-dark accordion toggled1");
         } else {
             setStyle("navbar-nav bg-gradient-primary sidebar sidebar-dark accordion");
         }
     };
+
+    const handleLogout = () => {
+        // Clear the token from localStorage
+        localStorage.removeItem('token');
+        // Redirect to login page
+        navigate("/");
+    };
+
     return (
         <>
             <nav className="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-                {/*  <!-- Sidebar Toggle (Topbar) --> */}
+                {/* Sidebar Toggle (Topbar) */}
                 <button
                     id="sidebarToggleTop"
                     className="btn btn-link d-md-none rounded-circle mr-3"
@@ -27,9 +34,9 @@ const TopBar = () => {
                     <i className="fa fa-bars"></i>
                 </button>
 
-                {/*  <!-- Topbar Navbar --> */}
+                {/* Topbar Navbar */}
                 <ul className="navbar-nav ml-auto">
-                    {/*  <!-- Nav Item - Search Dropdown (Visible Only XS) --> */}
+                    {/* Nav Item - Search Dropdown (Visible Only XS) */}
                     <li className="nav-item dropdown no-arrow d-sm-none">
                         <a
                             className="nav-link dropdown-toggle"
@@ -42,7 +49,7 @@ const TopBar = () => {
                         >
                             <i className="fas fa-search fa-fw"></i>
                         </a>
-                        {/*   <!-- Dropdown - Messages --> */}
+                        {/* Dropdown - Messages */}
                         <div
                             className="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
                             aria-labelledby="searchDropdown"
@@ -68,7 +75,7 @@ const TopBar = () => {
 
                     <div className="topbar-divider d-none d-sm-block"></div>
 
-                    {/* <!-- Nav Item - User Information --> */}
+                    {/* Nav Item - User Information */}
                     <li className="nav-item dropdown no-arrow">
                         <a
                             className="nav-link dropdown-toggle"
@@ -85,9 +92,10 @@ const TopBar = () => {
                             <img
                                 className="img-profile rounded-circle"
                                 src="img/undraw_profile.svg"
+                                alt="Profile"
                             />
                         </a>
-                        {/*  <!-- Dropdown - User Information --> */}
+                        {/* Dropdown - User Information */}
                         <div
                             className="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                             aria-labelledby="userDropdown"
@@ -95,8 +103,7 @@ const TopBar = () => {
                             <a
                                 className="dropdown-item"
                                 href="#"
-                                data-toggle="modal"
-                                data-target="#logoutModal"
+                                onClick={handleLogout} // Call handleLogout on click
                             >
                                 <i className="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                 Logout
@@ -106,7 +113,7 @@ const TopBar = () => {
                 </ul>
             </nav>
         </>
-    )
-}
+    );
+};
 
-export default TopBar
+export default TopBar;

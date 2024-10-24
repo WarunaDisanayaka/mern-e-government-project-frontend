@@ -30,13 +30,13 @@ const SideBar = () => {
 
             {/*  <!-- Nav Item - Dashboard --> */}
             <li className="nav-item active">
-                <a className="nav-link" href="/">
+                <a className="nav-link" href="/gramaniladhari">
                     <i className="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
 
             {/*  <!-- Nav Item - Pages Collapse Menu --> */}
-            <li className="nav-item">
+            {/* <li className="nav-item">
                 <a className="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseOne"
                     aria-expanded="true" aria-controls="collapseOne">
                     <i class="fas fa-city"></i>
@@ -48,7 +48,7 @@ const SideBar = () => {
                         <a className="collapse-item" href="/add-divisions"> Add Divisions</a>
                     </div>
                 </div>
-            </li>
+            </li> */}
 
             {/* <!-- Nav Item - Charts --> */}
             <li className="nav-item">

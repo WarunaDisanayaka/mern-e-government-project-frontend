@@ -1,150 +1,169 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom'; // Import useParams
-import SideBar from '../components/SideBar';
-import TopBar from '../components/TopBar';
+import React, { useState, useEffect } from 'react';
+import SideBar from '../../components/SideBar';
+import TopBar from '../../components/TopBar';
 
-const EditUserDetails = () => {
-    const { id } = useParams(); // Get the user ID from the URL parameters
-    const [userData, setUserData] = useState({
-       
-    });
+const AddUserDetails = () => {
+    const [fullName, setFullName] = useState('');
+    const [address, setAddress] = useState('');
+    const [nic, setNic] = useState('');
+    const [fatherName, setFatherName] = useState('');
+    const [fatherAddress, setFatherAddress] = useState('');
+    const [religion, setReligion] = useState('');
+    const [gender, setGender] = useState('');
+    const [isSriLankan, setIsSriLankan] = useState(true);
+    const [income, setIncome] = useState('');
+    const [familyMembers, setFamilyMembers] = useState('');
+    const [language, setLanguage] = useState('');
+    const [gramaNiladhariDivision, setGramaNiladhariDivision] = useState('');
+    const [isReceivingBenefits, setIsReceivingBenefits] = useState(false);
+    const [currentJobs, setCurrentJobs] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
 
-    // Fetch user data when the component mounts
+    const [districts, setDistricts] = useState([]);
+    const [selectedDistrict, setSelectedDistrict] = useState('');
+    const [gramaNiladhariDivisions, setGramaNiladhariDivisions] = useState([]);
+
     useEffect(() => {
-        const fetchUserData = async () => {
-            try {
-                const response = await fetch(`http://localhost:3001/api/${id}`); // Adjust this endpoint as necessary
+        // Fetch districts when the component mounts
+        fetch('http://localhost:3001/api/districts') // Update the endpoint as needed
+            .then((response) => response.json())
+            .then((data) => {
+                setDistricts(data); // Set the districts state
+            })
+            .catch((error) => console.error('Error fetching districts:', error));
+    }, []);
+
+    const handleDistrictChange = (e) => {
+        const districtId = e.target.value;
+        setSelectedDistrict(districtId);
+
+        // Fetch Grama Niladhari Divisions based on selected district
+        fetch(`http://localhost:3001/api/grama-niladhari/${districtId}`)
+            .then((response) => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
+
                 }
-                const data = await response.json();
-                // Set the state with the fetched data
-                setUserData({
-                    fullName: data.full_name,
-                    address: data.address,
-                    nic: data.nic,
-                    fatherName: data.father_name,
-                    fatherAddress: data.father_address,
-                    religion: data.religion,
-                    gender: data.gender,
-                    isSriLankan: data.is_srilankan,
-                    income: data.income,
-                    familyMembers: data.family_members,
-                    language: data.language,
-                    gramaNiladhariDivision: data.grama_niladhari_division,
-                    isReceivingBenefits: data.is_receiving_benefits,
-                    currentJobs: data.current_jobs,
-                });
-            } catch (error) {
-                console.error('Error fetching user data:', error);
-                setErrorMessage('Failed to load user data.');
-            }
-        };
+                return response.json();
 
-        fetchUserData();
-    }, [id]); // Fetch user data whenever the id changes
+            })
+            .then((data) => {
+                if (data.length === 0) {
+                    setGramaNiladhariDivisions([]); // No divisions found
+                    setGramaNiladhariDivision(''); // Reset selected Grama Niladhari Division
+                    setErrorMessage('No Grama Niladhari Divisions found for the selected district.');
 
-    const handleChange = (e) => {
-        const { name, value, type, checked } = e.target;
-        setUserData((prevData) => ({
-            ...prevData,
-            [name]: type === 'checkbox' ? checked : value,
-        }));
+                } else {
+                    setGramaNiladhariDivisions(data); // Set the Grama Niladhari Divisions state
+                    setGramaNiladhariDivision(''); // Reset selected Grama Niladhari Division
+                    setErrorMessage(''); // Clear any previous error message
+                    console.log(data)
+
+                }
+            })
+            .catch((error) => {
+                console.error('Error fetching Grama Niladhari Divisions:', error);
+                setErrorMessage('No Grama Niladhari Divisions found for the selected district.');
+            });
     };
 
-    const handleSubmit = async (e) => {
+
+
+    const handleSubmit = (e) => {
         e.preventDefault();
 
         // Basic validation
-        const requiredFields = [
-            'fullName', 'address', 'nic', 'fatherName',
-            'fatherAddress', 'religion', 'gender',
-            'income', 'familyMembers', 'language',
-            'gramaNiladhariDivision', 'currentJobs'
-        ];
-
-        for (let field of requiredFields) {
-            if (!userData[field]) {
-                setErrorMessage('Please fill out all fields.');
-                return;
-            }
+        if (!fullName || !address || !nic || !fatherName || !fatherAddress || !religion || !gender || !income || !familyMembers || !language || !gramaNiladhariDivision || !currentJobs) {
+            setErrorMessage('Please fill out all fields.');
+            return;
         }
 
         // Clear previous error message
         setErrorMessage('');
 
         // Prepare data to be sent to the backend
-        const userDataToUpdate = {
-            full_name: userData.fullName,
-            address: userData.address,
-            nic: userData.nic,
-            father_name: userData.fatherName,
-            father_address: userData.fatherAddress,
-            religion: userData.religion,
-            gender: userData.gender,
-            is_srilankan: userData.isSriLankan,
-            income: parseFloat(userData.income),
-            family_members: parseInt(userData.familyMembers, 10),
-            language: userData.language,
-            grama_niladhari_division: userData.gramaNiladhariDivision,
-            is_receiving_benefits: userData.isReceivingBenefits,
-            current_jobs: userData.currentJobs,
+        const userData = {
+            full_name: fullName,
+            address: address,
+            nic: nic,
+            father_name: fatherName,
+            father_address: fatherAddress,
+            religion: religion,
+            gender: gender,
+            is_srilankan: isSriLankan,
+            income: parseFloat(income),
+            family_members: parseInt(familyMembers, 10),
+            language: language,
+            grama_niladhari_division: gramaNiladhariDivision,
+            is_receiving_benefits: isReceivingBenefits,
+            current_jobs: currentJobs,
         };
 
-        try {
-            const response = await fetch(`http://localhost:3001/api/update/${userData.nic}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(userDataToUpdate),
+        // Send POST request to the backend
+        fetch('http://localhost:3001/api/create', { // Use the provided endpoint
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(userData),
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then((data) => {
+                if (data.message === "User with this NIC already exists") {
+                    setErrorMessage("User with this NIC already exists.");
+                } else {
+                    // Clear form fields on successful submission
+                    setFullName('');
+                    setAddress('');
+                    setNic('');
+                    setFatherName('');
+                    setFatherAddress('');
+                    setReligion('');
+                    setGender('');
+                    setIsSriLankan(true);
+                    setIncome('');
+                    setFamilyMembers('');
+                    setLanguage('');
+                    setGramaNiladhariDivision('');
+                    setIsReceivingBenefits(false);
+                    setCurrentJobs('');
+                    setSuccessMessage('User added successfully!');
+                }
+            })
+            .catch((error) => {
+                console.error('Error adding user:', error);
+                setErrorMessage('There was an error adding the user. Please try again.');
             });
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            const data = await response.json();
-            if (data.message === "User with this NIC already exists") {
-                setErrorMessage("User with this NIC already exists.");
-            } else {
-                // Clear form fields on successful submission
-                setUserData({
-                    fullName: '',
-                    address: '',
-                    nic: '',
-                    fatherName: '',
-                    fatherAddress: '',
-                    religion: '',
-                    gender: '',
-                    isSriLankan: true,
-                    income: '',
-                    familyMembers: '',
-                    language: '',
-                    gramaNiladhariDivision: '',
-                    isReceivingBenefits: false,
-                    currentJobs: '',
-                });
-                setSuccessMessage('User updated successfully!');
-            }
-        } catch (error) {
-            console.error('Error updating user:', error);
-            setErrorMessage('There was an error updating the user. Please try again.');
-        }
+
     };
 
     return (
         <div>
             <div id="page-top">
+                {/* Page Wrapper */}
                 <div id="wrapper">
+                    {/* Sidebar */}
                     <SideBar />
+                    {/* Content Wrapper */}
                     <div id="content-wrapper" className="d-flex flex-column">
+                        {/* Main Content */}
                         <div id="content">
+                            {/* Topbar */}
                             <TopBar />
+                            {/* Begin Page Content */}
                             <div className="container-fluid">
+                                {/* Page Heading */}
                                 <div className="d-sm-flex align-items-center justify-content-between mb-4">
-                                    <h1 className="h3 mb-0 text-gray-800">Edit User Details</h1>
+                                    <h1 className="h3 mb-0 text-gray-800">Add User Details</h1>
                                 </div>
+
+                                {/* Content Row */}
                                 <div className="row">
                                     <div className="col-lg-12">
                                         <div className="card shadow mb-4">
@@ -162,9 +181,8 @@ const EditUserDetails = () => {
                                                                     type="text"
                                                                     className="form-control"
                                                                     id="fullName"
-                                                                    name="fullName"
-                                                                    value={userData.fullName}
-                                                                    onChange={handleChange}
+                                                                    value={fullName}
+                                                                    onChange={(e) => setFullName(e.target.value)}
                                                                     placeholder="Enter Full Name"
                                                                 />
                                                             </div>
@@ -174,9 +192,8 @@ const EditUserDetails = () => {
                                                                     type="text"
                                                                     className="form-control"
                                                                     id="address"
-                                                                    name="address"
-                                                                    value={userData.address}
-                                                                    onChange={handleChange}
+                                                                    value={address}
+                                                                    onChange={(e) => setAddress(e.target.value)}
                                                                     placeholder="Enter Address"
                                                                 />
                                                             </div>
@@ -186,9 +203,8 @@ const EditUserDetails = () => {
                                                                     type="text"
                                                                     className="form-control"
                                                                     id="nic"
-                                                                    name="nic"
-                                                                    value={userData.nic}
-                                                                    onChange={handleChange}
+                                                                    value={nic}
+                                                                    onChange={(e) => setNic(e.target.value)}
                                                                     placeholder="Enter NIC"
                                                                 />
                                                             </div>
@@ -199,9 +215,8 @@ const EditUserDetails = () => {
                                                                         className="form-check-input"
                                                                         type="checkbox"
                                                                         id="isSriLankan"
-                                                                        name="isSriLankan"
-                                                                        checked={userData.isSriLankan}
-                                                                        onChange={handleChange}
+                                                                        checked={isSriLankan}
+                                                                        onChange={(e) => setIsSriLankan(e.target.checked)}
                                                                     />
                                                                     <label className="form-check-label" htmlFor="isSriLankan">
                                                                         Yes
@@ -214,9 +229,8 @@ const EditUserDetails = () => {
                                                                     type="number"
                                                                     className="form-control"
                                                                     id="income"
-                                                                    name="income"
-                                                                    value={userData.income}
-                                                                    onChange={handleChange}
+                                                                    value={income}
+                                                                    onChange={(e) => setIncome(e.target.value)}
                                                                     placeholder="Enter Income"
                                                                 />
                                                             </div>
@@ -226,10 +240,20 @@ const EditUserDetails = () => {
                                                                     type="number"
                                                                     className="form-control"
                                                                     id="familyMembers"
-                                                                    name="familyMembers"
-                                                                    value={userData.familyMembers}
-                                                                    onChange={handleChange}
+                                                                    value={familyMembers}
+                                                                    onChange={(e) => setFamilyMembers(e.target.value)}
                                                                     placeholder="Enter Number of Family Members"
+                                                                />
+                                                            </div>
+                                                            <div className="form-group">
+                                                                <label htmlFor="language">Language <br /> භාවිතා කරන භාෂාව  </label>
+                                                                <input
+                                                                    type="text"
+                                                                    className="form-control"
+                                                                    id="language"
+                                                                    value={language}
+                                                                    onChange={(e) => setLanguage(e.target.value)}
+                                                                    placeholder="Enter Primary Language"
                                                                 />
                                                             </div>
                                                         </div>
@@ -237,26 +261,24 @@ const EditUserDetails = () => {
                                                         {/* Second Column */}
                                                         <div className="col-lg-6">
                                                             <div className="form-group">
-                                                                <label htmlFor="fatherName">Father Name <br /> අකුණු නම </label>
+                                                                <label htmlFor="fatherName">Father's Name <br /> පියාගේ නම </label>
                                                                 <input
                                                                     type="text"
                                                                     className="form-control"
                                                                     id="fatherName"
-                                                                    name="fatherName"
-                                                                    value={userData.fatherName}
-                                                                    onChange={handleChange}
+                                                                    value={fatherName}
+                                                                    onChange={(e) => setFatherName(e.target.value)}
                                                                     placeholder="Enter Father's Name"
                                                                 />
                                                             </div>
                                                             <div className="form-group">
-                                                                <label htmlFor="fatherAddress">Father Address <br /> අකුණු ලිපිනය </label>
+                                                                <label htmlFor="fatherAddress">Father's Address <br />පියාගේ ලිපිනය </label>
                                                                 <input
                                                                     type="text"
                                                                     className="form-control"
                                                                     id="fatherAddress"
-                                                                    name="fatherAddress"
-                                                                    value={userData.fatherAddress}
-                                                                    onChange={handleChange}
+                                                                    value={fatherAddress}
+                                                                    onChange={(e) => setFatherAddress(e.target.value)}
                                                                     placeholder="Enter Father's Address"
                                                                 />
                                                             </div>
@@ -266,61 +288,67 @@ const EditUserDetails = () => {
                                                                     type="text"
                                                                     className="form-control"
                                                                     id="religion"
-                                                                    name="religion"
-                                                                    value={userData.religion}
-                                                                    onChange={handleChange}
+                                                                    value={religion}
+                                                                    onChange={(e) => setReligion(e.target.value)}
                                                                     placeholder="Enter Religion"
                                                                 />
                                                             </div>
                                                             <div className="form-group">
-                                                                <label htmlFor="gender">Gender <br /> ලිංගය </label>
+                                                                <label htmlFor="gender">Gender <br /> ස්ත්‍රී/පුරුෂ භාවය </label>
                                                                 <select
                                                                     className="form-control"
                                                                     id="gender"
-                                                                    name="gender"
-                                                                    value={userData.gender}
-                                                                    onChange={handleChange}
+                                                                    value={gender}
+                                                                    onChange={(e) => setGender(e.target.value)}
                                                                 >
                                                                     <option value="">Select Gender</option>
                                                                     <option value="Male">Male</option>
                                                                     <option value="Female">Female</option>
-                                                                    <option value="Other">Other</option>
+                                                                </select>
+                                                            </div>
+
+                                                            <div className="form-group">
+                                                                <label htmlFor="district">District <br /> දිස්ත්‍රික්කය </label>
+                                                                <select
+                                                                    className="form-control"
+                                                                    id="district"
+                                                                    value={selectedDistrict}
+                                                                    onChange={handleDistrictChange}
+                                                                >
+                                                                    <option value="">Select District</option>
+                                                                    {districts.map(district => (
+                                                                        <option key={district.id} value={district.id}>
+                                                                            {district.name}
+                                                                        </option>
+                                                                    ))}
                                                                 </select>
                                                             </div>
                                                             <div className="form-group">
-                                                                <label htmlFor="language">Language <br /> භාෂාව </label>
-                                                                <input
-                                                                    type="text"
-                                                                    className="form-control"
-                                                                    id="language"
-                                                                    name="language"
-                                                                    value={userData.language}
-                                                                    onChange={handleChange}
-                                                                    placeholder="Enter Language"
-                                                                />
-                                                            </div>
-                                                            <div className="form-group">
-                                                                <label htmlFor="gramaNiladhariDivision">Grama Niladhari Division <br /> ග්‍රාම නිලධාරී දිවිශාසිත </label>
-                                                                <input
-                                                                    type="text"
+                                                                <label htmlFor="gramaNiladhariDivision">Grama Niladhari Division <br /> ග්‍රාම නිලධාරී වසම </label>
+                                                                <select
                                                                     className="form-control"
                                                                     id="gramaNiladhariDivision"
-                                                                    name="gramaNiladhariDivision"
-                                                                    value={userData.gramaNiladhariDivision}
-                                                                    onChange={handleChange}
-                                                                    placeholder="Enter Grama Niladhari Division"
-                                                                />
+                                                                    value={gramaNiladhariDivision}
+                                                                    onChange={(e) => setGramaNiladhariDivision(e.target.value)}
+                                                                >
+                                                                    <option value="">Select Grama Niladhari Division</option>
+                                                                    {gramaNiladhariDivisions.map(division => (
+                                                                        <option key={division.id} value={division.id}>
+                                                                            {division.name + " " + division.division_number}
+                                                                        </option>
+                                                                    ))}
+                                                                </select>
                                                             </div>
+
                                                             <div className="form-group">
-                                                                <label htmlFor="isReceivingBenefits">Is Receiving Benefits? <br /> ප්‍රතිලාභ ලබාදෙනවාද? </label>
+                                                                <label htmlFor="isReceivingBenefits">Is Receiving Benefits? <br /> ආධාර ලබන්නෙද?</label>
                                                                 <div className="form-check">
                                                                     <input
                                                                         className="form-check-input"
                                                                         type="checkbox"
                                                                         id="isReceivingBenefits"
-                                                                        name="isReceivingBenefits"
-                                                                        checked={userData.isReceivingBenefits}
-                                                                        onChange={handleChange}
+                                                                        checked={isReceivingBenefits}
+                                                                        onChange={(e) => setIsReceivingBenefits(e.target.checked)}
                                                                     />
                                                                     <label className="form-check-label" htmlFor="isReceivingBenefits">
                                                                         Yes
@@ -333,32 +361,29 @@ const EditUserDetails = () => {
                                                                     type="text"
                                                                     className="form-control"
                                                                     id="currentJobs"
-                                                                    name="currentJobs"
-                                                                    value={userData.currentJobs}
-                                                                    onChange={handleChange}
+                                                                    value={currentJobs}
+                                                                    onChange={(e) => setCurrentJobs(e.target.value)}
                                                                     placeholder="Enter Current Jobs"
                                                                 />
                                                             </div>
                                                         </div>
                                                     </div>
-
-                                                    {/* Error and Success Messages */}
                                                     {errorMessage && <div className="alert alert-danger">{errorMessage}</div>}
                                                     {successMessage && <div className="alert alert-success">{successMessage}</div>}
-
-                                                    <button type="submit" className="btn btn-primary">Update User</button>
+                                                    <button type="submit" className="btn btn-primary">Add User</button>
                                                 </form>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                            {/* End of Page Content */}
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
+            </div >
+        </div >
     );
 };
 
-export default EditUserDetails;
+export default AddUserDetails;

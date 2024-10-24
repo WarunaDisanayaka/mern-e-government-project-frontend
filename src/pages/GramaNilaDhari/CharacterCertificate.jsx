@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import jsPDF from 'jspdf';
 import axios from 'axios';
-import SideBar from '../components/SideBar';
-import TopBar from '../components/TopBar';
-import { font } from '../fonts/font'; // Adjust the path based on your project structure
+import SideBar from '../../components/SideBar';
+import TopBar from '../../components/TopBar';
+import { font } from '../../fonts/font'; // Adjust the path based on your project structure
 
 const CharacterCertificate = () => {
     const [fullName, setFullName] = useState('');
