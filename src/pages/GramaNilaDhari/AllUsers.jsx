@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import SideBar from '../components/SideBar';
-import TopBar from '../components/TopBar';
+import SideBar from '../../components/SideBar';
+import TopBar from '../../components/TopBar';
 
 const AllUsers = () => {
     const [userDetails, setUserDetails] = useState([]);
@@ -292,7 +292,7 @@ const AllUsers = () => {
                                             {/* Second Column */}
                                             <div className="col-lg-6">
                                                 <div className="form-group">
-                                                    <label htmlFor="fatherName">Father Name <br /> අකුණු නම </label>
+                                                    <label htmlFor="fatherName">Father Name <br /> පියාගේ නම </label>
                                                     <input
                                                         type="text"
                                                         className="form-control"
@@ -355,7 +355,7 @@ const AllUsers = () => {
                                                     />
                                                 </div>
                                                 <div className="form-group">
-                                                    <label htmlFor="gramaNiladhariDivision">Grama Niladhari Division <br /> ග්‍රාම නිලධාරී දිවිශාසිත </label>
+                                                    <label htmlFor="gramaNiladhariDivision">Grama Niladhari Division <br /> ග්‍රාම නිලධාරී වසම </label>
                                                     <input
                                                         type="text"
                                                         className="form-control"
@@ -388,7 +388,7 @@ const AllUsers = () => {
                                                     </div>
                                                 </div>
                                                 <div className="form-group">
-                                                    <label htmlFor="currentJobs">Current Jobs <br /> වර්තමාන රැකියා </label>
+                                                    <label htmlFor="currentJobs">Current Job <br /> වර්තමාන රැකියාව </label>
                                                     <input
                                                         type="text"
                                                         className="form-control"
