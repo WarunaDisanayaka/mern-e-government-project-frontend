@@ -13,6 +13,7 @@ import Home from './pages/GramaNilaDhari/Home';
 import Login from './pages/Login/Login';
 import GramaNilaDhariLogin from './pages/GramaNilaDhari/Login/GramaNilaDhariLogin';
 import ProtectedRoute from './ProtectedRoute'; // Import the ProtectedRoute component
+import AdminLogin from './pages/Admin/Login/AdminLogin';
 
 const AppRoutes = () => {
     return (
@@ -20,8 +21,10 @@ const AppRoutes = () => {
             <Routes>
                 <Route path="/" element={<GramaNilaDhariLogin />} />
                 <Route path="/login" element={<Login />} />
+                <Route path="/admin" element={<AdminLogin />} />
+
                 {/* Admin routes */}
-                <Route path="/admin" element={<AdminHome />} />
+                <Route path="/admin-home" element={<AdminHome />} />
                 <Route path="/create-account" element={<CreateAccount />} />
 
 
