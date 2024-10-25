@@ -33,7 +33,7 @@ const EditUserDetails = () => {
                     income: data.income,
                     familyMembers: data.family_members,
                     language: data.language,
-                    gramaNiladhariDivision: data.grama_niladhari_division,
+                    gramaNiladhariDivision: localStorage.getItem('division_id'),
                     isReceivingBenefits: data.is_receiving_benefits,
                     currentJobs: data.current_jobs,
                 });
@@ -88,7 +88,7 @@ const EditUserDetails = () => {
             income: parseFloat(userData.income),
             family_members: parseInt(userData.familyMembers, 10),
             language: userData.language,
-            grama_niladhari_division: userData.gramaNiladhariDivision,
+            grama_niladhari_division: localStorage.getItem('division_id'),
             is_receiving_benefits: userData.isReceivingBenefits,
             current_jobs: userData.currentJobs,
         };

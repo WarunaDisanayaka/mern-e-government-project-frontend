@@ -354,18 +354,7 @@ const AllUsers = () => {
                                                         placeholder="Enter Language"
                                                     />
                                                 </div>
-                                                <div className="form-group">
-                                                    <label htmlFor="gramaNiladhariDivision">Grama Niladhari Division <br /> ග්‍රාම නිලධාරී වසම </label>
-                                                    <input
-                                                        type="text"
-                                                        className="form-control"
-                                                        id="gramaNiladhariDivision"
-                                                        name="grama_niladhari_division"
-                                                        value={selectedUser?.grama_niladhari_division || ""}
-                                                        onChange={handleInputChange}
-                                                        placeholder="Enter Grama Niladhari Division"
-                                                    />
-                                                </div>
+                                                
                                                 <div className="form-group">
                                                     <label htmlFor="isReceivingBenefits">Is Receiving Benefits? <br /> ප්‍රතිලාභ ලබාදෙනවාද? </label>
                                                     <div className="form-check">

@@ -20,6 +20,10 @@ const AppRoutes = () => {
             <Routes>
                 <Route path="/" element={<GramaNilaDhariLogin />} />
                 <Route path="/login" element={<Login />} />
+                {/* Admin routes */}
+                <Route path="/admin" element={<AdminHome />} />
+                <Route path="/create-account" element={<CreateAccount />} />
+
 
                 {/* Protected routes */}
                 <Route path="/home" element={<ProtectedRoute><Home /></ProtectedRoute>} />
@@ -30,7 +34,6 @@ const AppRoutes = () => {
                 <Route path="/edit-user/:id" element={<ProtectedRoute><EditUserDetails /></ProtectedRoute>} />
                 <Route path="/generate-character-certificate" element={<ProtectedRoute><CharacterCertificate /></ProtectedRoute>} />
                 <Route path="/gramaniladhari" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
-                <Route path="/create-account" element={<ProtectedRoute><CreateAccount /></ProtectedRoute>} />
             </Routes>
         </Router>
     );
