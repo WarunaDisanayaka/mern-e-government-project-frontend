@@ -29,8 +29,17 @@ const CharacterCertificate = () => {
 
     const handleSearch = async (e) => {
         e.preventDefault();
+
+        // Get division_id from local storage
+        const divisionId = localStorage.getItem('division_id');
+
+        if (!divisionId) {
+            setErrorMessage('Division ID not found in local storage');
+            return;
+        }
+
         try {
-            const response = await axios.get(`http://localhost:3001/api/${searchNIC}`);
+            const response = await axios.get(`http://localhost:3001/api/${searchNIC}/${divisionId}`);
             const data = response.data;
 
             // Populate fields only if the data exists in the API response
@@ -43,14 +52,13 @@ const CharacterCertificate = () => {
                 setReligion(data.religion || '');
                 setGender(data.gender || '');
                 setIsSriLankan(data.is_srilankan === 1);
-                // Only fill other fields if they exist in the response
-                // The rest of the form fields remain as is
             }
         } catch (error) {
             console.error('Error fetching user data:', error);
             setErrorMessage('No data found for this NIC');
         }
     };
+
 
     const handleSubmit = (e) => {
         e.preventDefault();
