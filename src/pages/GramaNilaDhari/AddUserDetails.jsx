@@ -95,7 +95,7 @@ const AddUserDetails = () => {
             income: parseFloat(income),
             family_members: parseInt(familyMembers, 10),
             language: language,
-            grama_niladhari_division: gramaNiladhariDivision,
+            grama_niladhari_division: localStorage.getItem('division_id'),
             is_receiving_benefits: isReceivingBenefits,
             current_jobs: currentJobs,
         };
@@ -307,38 +307,7 @@ const AddUserDetails = () => {
                                                                 </select>
                                                             </div>
 
-                                                            <div className="form-group">
-                                                                <label htmlFor="district">District <br /> දිස්ත්‍රික්කය </label>
-                                                                <select
-                                                                    className="form-control"
-                                                                    id="district"
-                                                                    value={selectedDistrict}
-                                                                    onChange={handleDistrictChange}
-                                                                >
-                                                                    <option value="">Select District</option>
-                                                                    {districts.map(district => (
-                                                                        <option key={district.id} value={district.id}>
-                                                                            {district.name}
-                                                                        </option>
-                                                                    ))}
-                                                                </select>
-                                                            </div>
-                                                            <div className="form-group">
-                                                                <label htmlFor="gramaNiladhariDivision">Grama Niladhari Division <br /> ග්‍රාම නිලධාරී වසම </label>
-                                                                <select
-                                                                    className="form-control"
-                                                                    id="gramaNiladhariDivision"
-                                                                    value={gramaNiladhariDivision}
-                                                                    onChange={(e) => setGramaNiladhariDivision(e.target.value)}
-                                                                >
-                                                                    <option value="">Select Grama Niladhari Division</option>
-                                                                    {gramaNiladhariDivisions.map(division => (
-                                                                        <option key={division.id} value={division.id}>
-                                                                            {division.name + " " + division.division_number}
-                                                                        </option>
-                                                                    ))}
-                                                                </select>
-                                                            </div>
+
 
                                                             <div className="form-group">
                                                                 <label htmlFor="isReceivingBenefits">Is Receiving Benefits? <br /> ආධාර ලබන්නෙද?</label>
