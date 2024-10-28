@@ -74,7 +74,7 @@ const AddUserDetails = () => {
         e.preventDefault();
 
         // Basic validation
-        if (!fullName || !address || !nic || !fatherName || !fatherAddress || !religion || !gender || !income || !familyMembers || !language || !gramaNiladhariDivision || !currentJobs) {
+        if (!fullName || !address || !nic || !fatherName || !fatherAddress || !religion || !gender || !income || !familyMembers || !language || !currentJobs) {
             setErrorMessage('Please fill out all fields.');
             return;
         }
