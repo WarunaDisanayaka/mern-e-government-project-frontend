@@ -18,7 +18,18 @@ const IncomeCertificate = () => {
         vehicles: '',
         other: '',
         total: '',
+        propertyIncome: '',
+        propertyTotal: '',
+        deedNo: '',
+        ownerName: '',
+        businessLocation: '',
+        registrationNo: '',
+        natureOfBusiness: '',
+        salesTax: '',
+        jobLocation: '',
+        designation: '',
     });
+
 
     const handleGeneratePDF = () => {
         const certificateData = {
@@ -28,11 +39,14 @@ const IncomeCertificate = () => {
             fatherName,
             monthlyIncome,
             annualIncome,
-            incomeSources,
+            ...incomeSources,
         };
-        window.open(`certificate.html?${new URLSearchParams(certificateData)}`);
-        console.log(certificateData);
+
+        // Use this data to populate the HTML
+        window.open(`income.html?${new URLSearchParams(certificateData)}`);
+        console.log(certificateData)
     };
+
 
     const handleSearch = async (e) => {
         e.preventDefault();
@@ -132,63 +146,63 @@ const IncomeCertificate = () => {
                                         <div className="form-group">
                                             <label>Income Sources / ආදායම් ලැබෙන මාර්ග</label>
                                             <div className="form-group">
-                                                <label htmlFor="properties">From Properties (වගාව)</label>
+                                                <label htmlFor="fromProperties">From Properties (වගාව)</label>
                                                 <input
                                                     type="text"
                                                     className="form-control"
-                                                    id="properties"
+                                                    id="fromProperties"
                                                     value={incomeSources.properties}
                                                     onChange={(e) => setIncomeSources({ ...incomeSources, properties: e.target.value })}
                                                 />
                                             </div>
                                             <div className="form-group">
-                                                <label htmlFor="businesses">From Businesses (ව්‍යාපාර)</label>
+                                                <label htmlFor="fromBusinesses">From Businesses (ව්‍යාපාර)</label>
                                                 <input
                                                     type="text"
                                                     className="form-control"
-                                                    id="businesses"
+                                                    id="fromBusinesses"
                                                     value={incomeSources.businesses}
                                                     onChange={(e) => setIncomeSources({ ...incomeSources, businesses: e.target.value })}
                                                 />
                                             </div>
                                             <div className="form-group">
-                                                <label htmlFor="job">From Job (රැකියාව)</label>
+                                                <label htmlFor="fromJob">From Job (රැකියාව)</label>
                                                 <input
                                                     type="text"
                                                     className="form-control"
-                                                    id="job"
+                                                    id="fromJob"
                                                     value={incomeSources.job}
                                                     onChange={(e) => setIncomeSources({ ...incomeSources, job: e.target.value })}
                                                 />
                                             </div>
                                             <div className="form-group">
-                                                <label htmlFor="vehicles">From Vehicles (වාහන)</label>
+                                                <label htmlFor="fromVehicles">From Vehicles (වාහන)</label>
                                                 <input
                                                     type="text"
                                                     className="form-control"
-                                                    id="vehicles"
+                                                    id="fromVehicles"
                                                     value={incomeSources.vehicles}
                                                     onChange={(e) => setIncomeSources({ ...incomeSources, vehicles: e.target.value })}
                                                 />
                                             </div>
                                             <div className="form-group">
-                                                <label htmlFor="other">Other Sources (වෙනත් ආකාරයන්)</label>
+                                                <label htmlFor="fromOtherSources">Other Sources (වෙනත් ආකාරයන්)</label>
                                                 <input
                                                     type="text"
                                                     className="form-control"
-                                                    id="other"
+                                                    id="fromOtherSources"
                                                     value={incomeSources.other}
                                                     onChange={(e) => setIncomeSources({ ...incomeSources, other: e.target.value })}
                                                 />
                                             </div>
                                             <div className="form-group">
-                                                <label htmlFor="other">Total (එකතුව)</label>
+                                                <label htmlFor="totalIncome">Total (එකතුව)</label>
                                                 <input
                                                     type="text"
                                                     className="form-control"
-                                                    id="other"
-                                                    value={incomeSources.other}
-                                                    onChange={(e) => setIncomeSources({ ...incomeSources, other: e.target.value })}
+                                                    id="totalIncome"
+                                                    value={incomeSources.total}
+                                                    onChange={(e) => setIncomeSources({ ...incomeSources, total: e.target.value })}
                                                 />
                                             </div>
                                         </div>
@@ -198,26 +212,25 @@ const IncomeCertificate = () => {
                                             <div className="row">
                                                 <div className="col-md-6">
                                                     <div className="form-group">
-                                                        <label htmlFor="properties">From Properties (වගාව)</label>
+                                                        <label htmlFor="propertyIncome">From Properties (වගාව)</label>
                                                         <input
                                                             type="text"
                                                             className="form-control"
-                                                            id="properties"
-                                                            value={incomeSources.properties}
-                                                            onChange={(e) => setIncomeSources({ ...incomeSources, properties: e.target.value })}
+                                                            id="propertyIncome"
+                                                            value={incomeSources.propertyIncome}
+                                                            onChange={(e) => setIncomeSources({ ...incomeSources, propertyIncome: e.target.value })}
                                                         />
                                                     </div>
                                                 </div>
-
                                                 <div className="col-md-6">
                                                     <div className="form-group">
-                                                        <label htmlFor="other">Total (ප්‍රමාණය)</label>
+                                                        <label htmlFor="propertyTotal">Total (ප්‍රමාණය)</label>
                                                         <input
                                                             type="text"
                                                             className="form-control"
-                                                            id="other"
-                                                            value={incomeSources.other}
-                                                            onChange={(e) => setIncomeSources({ ...incomeSources, other: e.target.value })}
+                                                            id="propertyTotal"
+                                                            value={incomeSources.propertyTotal}
+                                                            onChange={(e) => setIncomeSources({ ...incomeSources, propertyTotal: e.target.value })}
                                                         />
                                                     </div>
                                                 </div>
@@ -228,26 +241,25 @@ const IncomeCertificate = () => {
                                             <div className="row">
                                                 <div className="col-md-6">
                                                     <div className="form-group">
-                                                        <label htmlFor="properties">Deed No (ඔප්පු අංකය)</label>
+                                                        <label htmlFor="deedNo">Deed No (ඔප්පු අංකය)</label>
                                                         <input
                                                             type="text"
                                                             className="form-control"
-                                                            id="properties"
-                                                            value={incomeSources.properties}
-                                                            onChange={(e) => setIncomeSources({ ...incomeSources, properties: e.target.value })}
+                                                            id="deedNo"
+                                                            value={incomeSources.deedNo}
+                                                            onChange={(e) => setIncomeSources({ ...incomeSources, deedNo: e.target.value })}
                                                         />
                                                     </div>
                                                 </div>
-
                                                 <div className="col-md-6">
                                                     <div className="form-group">
-                                                        <label htmlFor="other">Owner name (අයිතිකරුගේ නම )</label>
+                                                        <label htmlFor="ownerName">Owner name (අයිතිකරුගේ නම)</label>
                                                         <input
                                                             type="text"
                                                             className="form-control"
-                                                            id="other"
-                                                            value={incomeSources.other}
-                                                            onChange={(e) => setIncomeSources({ ...incomeSources, other: e.target.value })}
+                                                            id="ownerName"
+                                                            value={incomeSources.ownerName}
+                                                            onChange={(e) => setIncomeSources({ ...incomeSources, ownerName: e.target.value })}
                                                         />
                                                     </div>
                                                 </div>
@@ -255,31 +267,29 @@ const IncomeCertificate = () => {
                                         </div>
 
                                         <div className="form-group">
-                                            <label>If from businesses / ව්‍යාපාර වලින් නම් </label>
-
+                                            <label>If from businesses / ව්‍යාපාර වලින් නම්</label>
                                             <div className="row">
                                                 <div className="col-md-6">
                                                     <div className="form-group">
-                                                        <label htmlFor="properties">Location (පිහිටි ස්ථානය )</label>
+                                                        <label htmlFor="businessLocation">Location (පිහිටි ස්ථානය)</label>
                                                         <input
                                                             type="text"
                                                             className="form-control"
-                                                            id="properties"
-                                                            value={incomeSources.properties}
-                                                            onChange={(e) => setIncomeSources({ ...incomeSources, properties: e.target.value })}
+                                                            id="businessLocation"
+                                                            value={incomeSources.businessLocation}
+                                                            onChange={(e) => setIncomeSources({ ...incomeSources, businessLocation: e.target.value })}
                                                         />
                                                     </div>
                                                 </div>
-
                                                 <div className="col-md-6">
                                                     <div className="form-group">
-                                                        <label htmlFor="other">Registration No (ලියාපදිංචි අංකය )</label>
+                                                        <label htmlFor="registrationNo">Registration No (ලියාපදිංචි අංකය)</label>
                                                         <input
                                                             type="text"
                                                             className="form-control"
-                                                            id="other"
-                                                            value={incomeSources.other}
-                                                            onChange={(e) => setIncomeSources({ ...incomeSources, other: e.target.value })}
+                                                            id="registrationNo"
+                                                            value={incomeSources.registrationNo}
+                                                            onChange={(e) => setIncomeSources({ ...incomeSources, registrationNo: e.target.value })}
                                                         />
                                                     </div>
                                                 </div>
@@ -287,78 +297,61 @@ const IncomeCertificate = () => {
                                         </div>
 
                                         <div className="form-group">
-                                            <label>Nature of Business :- Hotel / Tea Shop / Retail Shop / Pharmacy / Wholesale Trade / Tourist Trade / Fairs / Other <br /> ව්‍යාපාරයේ ස්වභාවය :- හෝටලයක්/ තේ කඩයක් / සිල්ලර කඩයක් / ෆාමසියක් / තොග වෙළදාමක් / සංචාරක වෙළදාමක් / පොළවල් වල / වෙනත්  / ව්‍යාපාර වලින් නම්  </label>
-
+                                            <label>Nature of Business :- Hotel / Tea Shop / Retail Shop / Pharmacy / Wholesale Trade / Tourist Trade / Fairs / Other <br /> ව්‍යාපාරයේ ස්වභාවය :- හෝටලයක්/ තේ කඩයක් / සිල්ලර කඩයක් / ෆාමසියක් / තොග වෙළදාමක් / සංචාරක වෙළදාමක් / පොළවල් වල / වෙනත්  / ව්‍යාපාර වලින් නම්</label>
                                             <div className="form-group">
                                                 <input
                                                     type="text"
                                                     className="form-control"
-                                                    id="properties"
-                                                    value={incomeSources.properties}
-                                                    onChange={(e) => setIncomeSources({ ...incomeSources, properties: e.target.value })}
+                                                    id="natureOfBusiness"
+                                                    value={incomeSources.natureOfBusiness}
+                                                    onChange={(e) => setIncomeSources({ ...incomeSources, natureOfBusiness: e.target.value })}
                                                 />
                                             </div>
                                         </div>
 
                                         <div className="form-group">
-                                            <label>Amount of sales tax paid for the previous quarter <br /> පසුගිය කාර්තුවට ගෙවා ඇති පිරිවැටුම් බදු මුදල  </label>
-
+                                            <label>Amount of sales tax paid for the previous quarter <br /> පසුගිය කාර්තුවට ගෙවා ඇති පිරිවැටුම් බදු මුදල</label>
                                             <div className="form-group">
                                                 <input
                                                     type="text"
                                                     className="form-control"
-                                                    id="properties"
-                                                    value={incomeSources.properties}
-                                                    onChange={(e) => setIncomeSources({ ...incomeSources, properties: e.target.value })}
+                                                    id="salesTax"
+                                                    value={incomeSources.salesTax}
+                                                    onChange={(e) => setIncomeSources({ ...incomeSources, salesTax: e.target.value })}
                                                 />
                                             </div>
                                         </div>
 
                                         <div className="form-group">
-                                            <label>Amount of sales tax paid for the previous quarter <br /> පසුගිය කාර්තුවට ගෙවා ඇති පිරිවැටුම් බදු මුදල  </label>
-
-                                            <div className="form-group">
-                                                <input
-                                                    type="text"
-                                                    className="form-control"
-                                                    id="properties"
-                                                    value={incomeSources.properties}
-                                                    onChange={(e) => setIncomeSources({ ...incomeSources, properties: e.target.value })}
-                                                />
-                                            </div>
-                                        </div>
-
-                                        <div className="form-group">
-                                            <label>If from job / රැකියාවෙන් නම්  </label>
-
+                                            <label>If from job / රැකියාවෙන් නම්</label>
                                             <div className="row">
                                                 <div className="col-md-6">
                                                     <div className="form-group">
-                                                        <label htmlFor="properties">Location (රැකියාව  )</label>
+                                                        <label htmlFor="jobLocation">Location (රැකියාව)</label>
                                                         <input
                                                             type="text"
                                                             className="form-control"
-                                                            id="properties"
-                                                            value={incomeSources.properties}
-                                                            onChange={(e) => setIncomeSources({ ...incomeSources, properties: e.target.value })}
+                                                            id="jobLocation"
+                                                            value={incomeSources.jobLocation}
+                                                            onChange={(e) => setIncomeSources({ ...incomeSources, jobLocation: e.target.value })}
                                                         />
                                                     </div>
                                                 </div>
-
                                                 <div className="col-md-6">
                                                     <div className="form-group">
-                                                        <label htmlFor="other">Institute (ආයතනය)</label>
+                                                        <label htmlFor="designation">Designation (තනතුර)</label>
                                                         <input
                                                             type="text"
                                                             className="form-control"
-                                                            id="other"
-                                                            value={incomeSources.other}
-                                                            onChange={(e) => setIncomeSources({ ...incomeSources, other: e.target.value })}
+                                                            id="designation"
+                                                            value={incomeSources.designation}
+                                                            onChange={(e) => setIncomeSources({ ...incomeSources, designation: e.target.value })}
                                                         />
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
+
 
                                         <div className="form-group">
                                             <label>Name of Vehicle Nature of Vehicle - Lorry / Three Wheeler / Van / Tractor / Truck Vehicle Number <br /> වාහන වලින් නම් වාහනයේ ස්වභාවය - ලොරි රථය / ත්‍රී වීලරය / වෑන් රථය / ට්‍රැක්ටරය / ට්‍රක්‌ රථය වාහන අංකය   </label>

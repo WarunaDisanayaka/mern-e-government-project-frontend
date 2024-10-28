@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Certificate of Residence and Character</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
+    <!-- Add html2pdf.js -->
+
+    <style>
+        body {
+            font-family: 'Noto Sans', sans-serif;
+            margin: 40px;
+            background-color: #f4f4f4;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 20px;
+            font-weight: 100;
+            margin-bottom: 40px;
+        }
+
+        h2 {
+            text-align: center;
+            font-size: 14px;
+            margin-bottom: 30px;
+            font-weight: normal;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border: 1px solid #ccc;
+            /* max-width: 600px; */
+            margin: 0 auto;
+        }
+
+        .form-group {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            position: relative;
+        }
+
+        .form-group .label-group {
+            width: 35%;
+        }
+
+        .label-group label {
+            font-weight: 100;
+            font-size: 12px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+
+        }
+
+        .value {
+            font-weight: 100;
+            width: 60%;
+            padding: 5px;
+            text-align: left;
+        }
+
+        .line {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: repeating-linear-gradient(to right, #000, #000 2px, transparent 2px, transparent 4px);
+        }
+
+        /* To align items side by side in the same row */
+        .form-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            border-bottom: 1px solid black;
+        }
+
+        .form-row .form-group {
+            position: relative;
+            flex: 0 0 48%;
+            /* Adjust the width to make two fields fit side by side */
+        }
+
+        .bottom-section {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .verify {
+            margin-left: 40%;
+        }
+    </style>
+
+    <script>
+        // Function to get URL parameters
+        function getQueryParams() {
+            const params = {};
+            const queryString = window.location.search.slice(1); // Remove the "?" at the start
+            const pairs = queryString.split("&");
+
+            for (const pair of pairs) {
+                const [key, value] = pair.split("=");
+                // Decode the value to handle special characters
+                params[decodeURIComponent(key)] = decodeURIComponent(value || "");
+            }
+            return params;
+        }
+
+        // Function to display values in the HTML
+        function displayValues() {
+            const params = getQueryParams();
+            console.log(params);
+
+            // Helper function to remove '+' from a string
+            const removePlus = (value) => value ? value.replaceAll("+", " ") : "N/A";
+
+            // Update the divs with the respective values using new IDs
+            document.getElementById("fullName").innerText = removePlus(params.fullName);
+            document.getElementById("address").innerText = removePlus(params.address);
+            document.getElementById("monthlyIncome").innerText = removePlus(params.monthlyIncome);
+            document.getElementById("annualIncome").innerText = removePlus(params.annualIncome);
+
+            // Update income sources
+            document.getElementById("properties").innerText = removePlus(params.properties);
+            document.getElementById("businesses").innerText = removePlus(params.businesses);
+            document.getElementById("job").innerText = removePlus(params.job);
+            document.getElementById("vehicles").innerText = removePlus(params.vehicles);
+            document.getElementById("other").innerText = removePlus(params.other);
+            document.getElementById("total").innerText = removePlus(params.total);
+            document.getElementById("propertyIncome").innerText = removePlus(params.propertyIncome);
+            document.getElementById("propertyTotal").innerText = removePlus(params.propertyTotal);
+            document.getElementById("deedNo").innerText = removePlus(params.deedNo);
+            document.getElementById("ownerName").innerText = removePlus(params.ownerName);
+            document.getElementById("businessLocation").innerText = removePlus(params.businessLocation);
+            document.getElementById("registrationNo").innerText = removePlus(params.registrationNo);
+            document.getElementById("natureOfBusiness").innerText = removePlus(params.natureOfBusiness);
+            document.getElementById("salesTax").innerText = removePlus(params.salesTax);
+            document.getElementById("jobLocation").innerText = removePlus(params.jobLocation);
+            document.getElementById("designation").innerText = removePlus(params.designation);
+
+            // Display other relevant fields
+            // document.getElementById("gender").innerText = removePlus(params.gender);
+            // document.getElementById("civilStatus").innerText = removePlus(params.civilStatus);
+            // document.getElementById("isSriLankan").innerText = params.isSriLankan === 'true' ? "Yes" : "No";
+
+            // Add any other fields you need to update based on your requirements
+        }
+
+        // Call the displayValues function when the window loads
+        window.onload = displayValues;
+
+    </script>
+
+</head>
+
+<body>
+
+    <div class="container" id="certificate">
+        <h1>ආදායම් සහතිකයක් ඉල්ලුම් කිරීම <br>Application for income certificate</h1>
+        <h1></h1>
+
+        <!-- Divisional Secretary's Division -->
+        <div class="form-group">
+            <div class="label-group">
+                <label for="fullName">01 අයදුම්කරුගේ නම සහ ලිපිනය</label>
+            </div>
+            <div class="value" id="fullName"></div>
+            <div class="line"></div>
+        </div>
+
+        <div class="form-group">
+            <div class="label-group">
+                <label for="address">ලිපිනය</label>
+            </div>
+            <div class="value" id="address"></div>
+            <div class="line"></div>
+        </div>
+
+        <div class="form-group">
+            <div class="label-group">
+                <label for="monthlyIncome">02 අයදුම්කරුගේ මාසික ආදායම</label>
+            </div>
+            <div class="value" id="monthlyIncome"></div>
+            <div class="line"></div>
+        </div>
+
+        <div class="form-group">
+            <div class="label-group">
+                <label for="annualIncome">වාර්ෂික ආදායම</label>
+            </div>
+            <div class="value" id="annualIncome"></div>
+            <div class="line"></div>
+        </div>
+
+        <div class="form-group">
+            <div class="label-group">
+                <label for="properties">03 දේපළ වලින් නම්</label>
+            </div>
+            <div class="value" id="properties"></div>
+            <div class="line"></div>
+        </div>
+
+        <div class="form-group">
+            <div class="label-group">
+                <label for="businesses">ව්‍යාපාර</label>
+            </div>
+            <div class="value" id="businesses"></div>
+            <div class="line"></div>
+        </div>
+
+        <div class="form-group">
+            <div class="label-group">
+                <label for="job">රැකියාව</label>
+            </div>
+            <div class="value" id="job"></div>
+            <div class="line"></div>
+        </div>
+
+        <div class="form-group">
+            <div class="label-group">
+                <label for="vehicles">වාහන</label>
+            </div>
+            <div class="value" id="vehicles"></div>
+            <div class="line"></div>
+        </div>
+
+        <div class="form-group">
+            <div class="label-group">
+                <label for="other">වෙනත් ආකාරයන්</label>
+            </div>
+            <div class="value" id="other"></div>
+            <div class="line"></div>
+        </div>
+
+        <div class="form-group">
+            <div class="label-group">
+                <label for="total">මුළු ආදායම</label>
+            </div>
+            <div class="value" id="total"></div>
+            <div class="line"></div>
+        </div>
+
+        <div class="form-group">
+            <div class="label-group">
+                <label for="propertyIncome">දේපළ ආදායම</label>
+            </div>
+            <div class="value" id="propertyIncome"></div>
+            <div class="line"></div>
+        </div>
+
+        <div class="form-group">
+            <div class="label-group">
+                <label for="propertyTotal">දේපළ මුළු ආදායම</label>
+            </div>
+            <div class="value" id="propertyTotal"></div>
+            <div class="line"></div>
+        </div>
+
+        <div class="form-group">
+            <div class="label-group">
+                <label for="deedNo">ඔප්පු අංකය</label>
+            </div>
+            <div class="value" id="deedNo"></div>
+            <div class="line"></div>
+        </div>
+
+        <div class="form-group">
+            <div class="label-group">
+                <label for="ownerName">අයිතිකරුගේ නම</label>
+            </div>
+            <div class="value" id="ownerName"></div>
+            <div class="line"></div>
+        </div>
+
+        <div class="form-group">
+            <div class="label-group">
+                <label for="businessLocation">ව්‍යාපාර පිහිටි ස්ථානය</label>
+            </div>
+            <div class="value" id="businessLocation"></div>
+            <div class="line"></div>
+        </div>
+
+        <div class="form-group">
+            <div class="label-group">
+                <label for="registrationNo">ලියාපදිංචි අංකය</label>
+            </div>
+            <div class="value" id="registrationNo"></div>
+            <div class="line"></div>
+        </div>
+
+        <div class="form-group">
+            <div class="label-group">
+                <label for="natureOfBusiness">ව්‍යාපාරයේ ස්වභාවය</label>
+            </div>
+            <div class="value" id="natureOfBusiness"></div>
+            <div class="line"></div>
+        </div>
+
+        <div class="form-group">
+            <div class="label-group">
+                <label for="salesTax">පසුගිය කාර්තුවට ගෙවා ඇති පිරිවැටුම් බදු මුදල</label>
+            </div>
+            <div class="value" id="salesTax"></div>
+            <div class="line"></div>
+        </div>
+
+        <div class="form-group">
+            <div class="label-group">
+                <label for="jobLocation">රැකියාව පිහිටි ස්ථානය</label>
+            </div>
+            <div class="value" id="jobLocation"></div>
+            <div class="line"></div>
+        </div>
+
+        <div class="form-group">
+            <div class="label-group">
+                <label for="designation">තනතුර</label>
+            </div>
+            <div class="value" id="designation"></div>
+            <div class="line"></div>
+        </div>
+
+
+        <!-- Purpose of Certificate -->
+        <div class="form-group">
+            <div class="label-group">
+                <label for="purpose"> වාහන වලින් නම් වාහනයේ ස්වභාවය - ලොරි රථය / ත්‍රී වීලරය / වෑන් රථය / ට්‍රැක්ටරය /
+                    ට්‍රක්‌ රථය වාහන අංකය </label>
+            </div>
+            <div class="value" id="purpose"></div>
+            <div class="line"></div>
+        </div>
+
+
+        <!-- Period of Residence -->
+
+
+        <p class="verify">ඉහත සඳහන් තොරතුරු සත්‍ය බවට සහතික කරමි </p>
+
+        <div class="bottom-section">
+            <div class="date">
+
+                <p>..........................<br> දිනය</p>
+            </div>
+            <div class="signature">
+                <p>..............................................<br> අයදුම්කරුගේ අත්සන </p>
+            </div>
+        </div>
+
+
+        <p class="">ඉහත සඳහන් තොරතුරු මා විසින් පරීක්ෂා කරන ලද අතර, සත්‍ය බවට සහතික කරමි.සඳහන් කර ආදායම් මාර්ග
+            ඔහු/ඇය සතුව ඇති බවට සෑහීමකට පත් වන අතර රු........................... ක් වාර්ෂික ආදායම් සහතිකයක් නිකුත්
+            කිරීමට නිර්දේශ කරමි. </p>
+
+        <div class="bottom-section">
+            <div class="date">
+
+                <p>..........................<br> දිනය</p>
+            </div>
+            <div class="signature">
+                <p>..............................................<br> ග්‍රාම නිලධාරිගේ අත්සන </p>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="download-button">
+        <button onclick="downloadPDF()">Download as PDF</button>
+    </div>
+
+    <script>
+        function downloadPDF() {
+            var element = document.getElementById('certificate');
+            html2pdf(element, {
+                // margin: 0.5,
+                filename: 'certificate_of_residence_and_character.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2 },
+                jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+            });
+        }
+    </script>
+
+</body>
+
+</html>
