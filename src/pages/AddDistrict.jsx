@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import SideBar from '../components/SideBar';
-import TopBar from '../components/TopBar';
+import SideBar from '../components/Admin/SideBar';
+import TopBar from '../components/Admin/TopBar';
 
 const AddDistrict = () => {
     const [districtName, setDistrictName] = useState('');
