@@ -75,7 +75,7 @@ const SideBar = () => {
                     <div className="bg-white py-2 collapse-inner rounded">
                         <a className="collapse-item" href="/generate-character-certificate">Character Certificate</a>
                         <a className="collapse-item" href="/generate-income-certificate">Income Certificate</a>
-                        <a className="collapse-item" href="/generate-character-certificate">Senior Citizen Certificate</a>
+                        {/* <a className="collapse-item" href="/generate-character-certificate">Senior Citizen Certificate</a> */}
 
                     </div>
                 </div>
