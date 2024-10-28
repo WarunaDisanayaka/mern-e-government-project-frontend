@@ -39,13 +39,13 @@ const SideBar = () => {
             <li className="nav-item">
                 <a className="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseOne"
                     aria-expanded="true" aria-controls="collapseOne">
-                    <i class="fas fa-city"></i>
-                    <span>Grama Nildhari Management</span>
+                    <i class="fas fa-certificate"></i>
+                    <span>Request Certifications</span>
                 </a>
                 <div id="collapseOne" className="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div className="bg-white py-2 collapse-inner rounded">
-                        <a className="collapse-item" href="/create-account"> Create Account</a>
-                        <a className="collapse-item" href="/all-accounts">All Accounts</a>
+                        <a className="collapse-item" href="/request-certificate"> Create Request</a>
+                        <a className="collapse-item" href="/my-requests">My Requests</a>
                     </div>
                 </div>
             </li>
