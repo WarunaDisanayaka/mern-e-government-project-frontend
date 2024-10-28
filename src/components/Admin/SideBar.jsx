@@ -35,6 +35,21 @@ const SideBar = () => {
                     <span>Dashboard</span></a>
             </li>
 
+            <li className="nav-item">
+                <a className="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
+                    aria-expanded="true" aria-controls="collapseTwo">
+                    <i class="fas fa-city"></i>
+                    <span>Administrative Regions</span>
+                </a>
+                <div id="collapseTwo" className="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div className="bg-white py-2 collapse-inner rounded">
+                        <a className="collapse-item" href="/add-district"> Add Districts</a>
+                        <a className="collapse-item" href="/add-divisions"> Add Divisions</a>
+                    </div>
+                </div>
+            </li>
+
+
             {/*  <!-- Nav Item - Pages Collapse Menu --> */}
             <li className="nav-item">
                 <a className="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseOne"
@@ -49,6 +64,7 @@ const SideBar = () => {
                     </div>
                 </div>
             </li>
+
 
 
             {/* <!-- Divider --> */}

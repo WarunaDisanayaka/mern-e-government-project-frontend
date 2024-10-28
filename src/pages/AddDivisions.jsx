@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import SideBar from '../components/SideBar';
-import TopBar from '../components/TopBar';
+import SideBar from '../components/Admin/SideBar';
+import TopBar from '../components/Admin/TopBar';
 
 const AddDivisions = () => {
     const [divisionName, setDivisionName] = useState('');
