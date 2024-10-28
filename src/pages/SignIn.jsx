@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { useNavigate, Link } from 'react-router-dom';
 
 const SignIn = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -37,7 +39,7 @@ const SignIn = () => {
                 localStorage.setItem('userId', data.id);
 
                 // Optionally, redirect to another page after successful login
-                // window.location.href = '/dashboard'; // example redirect
+                navigate('/sign-in');
             }
         } catch (error) {
             setErrorMessage("An error occurred. Please try again later.");
