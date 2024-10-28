@@ -23,7 +23,7 @@ const TopBar = () => {
         // Clear the token from localStorage
         localStorage.removeItem('token');
         // Redirect to login page
-        navigate("/login");
+        navigate("/");
     };
 
     return (

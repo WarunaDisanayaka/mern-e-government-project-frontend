@@ -39,7 +39,7 @@ const SignIn = () => {
                 localStorage.setItem('userId', data.id);
 
                 // Optionally, redirect to another page after successful login
-                navigate('/sign-in');
+                navigate('/user-home');
             }
         } catch (error) {
             setErrorMessage("An error occurred. Please try again later.");
