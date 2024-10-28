@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Certificate of Residence and Character</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
+    <!-- Add html2pdf.js -->
+
+    <style>
+        body {
+            font-family: 'Noto Sans', sans-serif;
+            margin: 40px;
+            background-color: #f4f4f4;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 20px;
+            font-weight: 100;
+            margin-bottom: 40px;
+        }
+
+        h2 {
+            text-align: center;
+            font-size: 14px;
+            margin-bottom: 30px;
+            font-weight: normal;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border: 1px solid #ccc;
+            /* max-width: 600px; */
+            margin: 0 auto;
+        }
+
+        .form-group {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            position: relative;
+        }
+
+        .form-group .label-group {
+            width: 35%;
+        }
+
+        .label-group label {
+            font-weight: 100;
+            font-size: 12px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+
+        }
+
+        .value {
+            font-weight: 100;
+            width: 60%;
+            padding: 5px;
+            text-align: left;
+        }
+
+        .line {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: #000;
+        }
+
+        /* To align items side by side in the same row */
+        .form-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            border-bottom: 1px solid black;
+        }
+
+        .form-row .form-group {
+            position: relative;
+            flex: 0 0 48%;
+            /* Adjust the width to make two fields fit side by side */
+        }
+
+        .bottom-section {
+            display: flex;
+            justify-content: space-between;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container" id="certificate">
+        <h1>ග්‍රාම නිලධාරී විසින් නිකුත් කරන පදිංචිය පිළිබඳ සහතිකය <br>Certificate on Residence and Character issued by
+            the Grama Niladhari</h1>
+        <h1></h1>
+
+        <!-- Divisional Secretary's Division -->
+        <div class="form-group">
+            <div class="label-group">
+                <label for="divSecDivision">ප්‍රාදේශීය ලේකම් කොට්ඨාසය</label>
+                <label for="divSecDivision">Divisional Secretary's Division</label>
+            </div>
+            <div class="value" id="divSecDivision">Colombo West</div>
+            <div class="line"></div>
+        </div>
+
+        <!-- Grama Niladhari Division and Number -->
+        <div class="form-group">
+            <div class="label-group">
+                <label for="gnDivision">ග්‍රාම නිලධාරී කොට්ඨාසය සහ අංකය</label>
+                <label for="gnDivision">Grama Niladhari Division and Number</label>
+            </div>
+            <div class="value" id="gnDivision">Colombo 1</div>
+            <div class="line"></div>
+        </div>
+
+        <!-- Personally Known to GN -->
+        <div class="form-group">
+            <div class="label-group">
+                <label for="knownToGn">ඉල්ලුම්කරු/කාරිය පෞද්ගලිකව හදුනන්නේද?</label>
+                <label for="knownToGn">Personally Known to GN</label>
+            </div>
+            <div class="value" id="knownToGn">Yes</div>
+            <div class="line"></div>
+        </div>
+
+        <div class="form-group">
+            <div class="label-group">
+                <label for="IfSo">හදුනන්නේනම් කොපමණ කලක සිටද?</label>
+                <label for="IfSo">If So, Since when</label>
+            </div>
+            <div class="value" id="IfSo">Yes</div>
+            <div class="line"></div>
+        </div>
+
+        <!-- Full Name -->
+        <div class="form-group">
+            <div class="label-group">
+                <label for="fullName">නම සහ ලිපිනය</label>
+                <label for="fullName">Name and address</label>
+            </div>
+            <div class="value" id="fullName">John Doe</div>
+            <div class="line"></div>
+        </div>
+
+        <!-- Gender -->
+        <div class="form-group">
+            <div class="label-group">
+                <label for="gender">ස්ත්‍රී/පුරුෂ භාවය</label>
+                <label for="gender">Gender</label>
+            </div>
+            <div class="value" id="gender">Male</div>
+            <div class="line"></div>
+        </div>
+
+        <!-- Form Row: Two form groups side by side -->
+        <div class="form-row">
+            <!-- Age -->
+            <div class="form-group">
+                <div class="label-group">
+                    <label for="age">වයස</label>
+                    <label for="age">Age</label>
+                </div>
+                <div class="value" id="age">30</div>
+            </div>
+
+            <!-- Civil Status -->
+            <div class="form-group">
+                <div class="label-group">
+                    <label for="civilStatus">විවාහක/අවිවාහක බව</label>
+                    <label for="civilStatus">Civil Status</label>
+                </div>
+                <div class="value" id="civilStatus">Married</div>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <!-- Age -->
+            <div class="form-group">
+                <div class="label-group">
+                    <label for="isSriLankan">ශ්‍රී ලාංකිකයෙක්ද?</label>
+                    <label for="isSriLankan">Is Sri Lankan</label>
+                </div>
+                <div class="value" id="isSriLankan">Yes</div>
+            </div>
+
+            <div class="form-group">
+                <div class="label-group">
+                    <label for="religion">ආගම</label>
+                    <label for="religion">Religion</label>
+                </div>
+                <div class="value" id="religion">Buddhism</div>
+            </div>
+        </div>
+
+        <!-- Occupation -->
+        <div class="form-group">
+            <div class="label-group">
+                <label for="occupation">දැනට කරන රස්සාව </label>
+                <label for="occupation">Occupation</label>
+            </div>
+            <div class="value" id="occupation">Engineer</div>
+            <div class="line"></div>
+        </div>
+
+        <!-- Since When -->
+        <div class="form-group">
+            <div class="label-group">
+                <label for="sinceWhen">ගමේ පදිංචි කාලය </label>
+                <label for="sinceWhen">Since When</label>
+            </div>
+            <div class="value" id="sinceWhen">2015</div>
+            <div class="line"></div>
+        </div>
+
+
+        <!-- NIC -->
+        <div class="form-group">
+            <div class="label-group">
+                <label for="nic">ජාතික හැදුනුම්පත් අංකය</label>
+                <label for="nic">NIC Number</label>
+            </div>
+            <div class="value" id="nic">982412345V</div>
+            <div class="line"></div>
+        </div>
+
+        <!-- Father's Name -->
+        <div class="form-group">
+            <div class="label-group">
+                <label for="fatherNameAddress">පියාගේ නම සහ ලිපිනය </label>
+                <label for="fatherNameAddress">Father's Name and address</label>
+            </div>
+            <div class="value" id="fatherNameAddress">Mr. Doe</div>
+            <div class="line"></div>
+        </div>
+
+        <!-- Purpose of Certificate -->
+        <div class="form-group">
+            <div class="label-group">
+                <label for="purpose">සහතිකය අවශ්‍ය කරන කාරණය </label>
+                <label for="purpose">Purpose of Certificate</label>
+            </div>
+            <div class="value" id="purpose">Employment</div>
+            <div class="line"></div>
+        </div>
+
+
+        <!-- Period of Residence -->
+        <div class="form-group">
+            <div class="label-group">
+                <label for="periodOfResidence">පුරුදු අත්සන / මාපටැගිලි සලකුණ </label>
+                <label for="periodOfResidence">Period of Residence</label>
+            </div>
+            <div class="value" id="periodOfResidence">10 years</div>
+            <div class="line"></div>
+        </div>
+
+
+        <div class="form-group">
+            <div class="label-group">
+                <label for="periodOfResidence">ග්‍රාම නිලධාරි කොට්ඨාසයේ පදිංචිව සිටි කාලය</label>
+                <label for="periodOfResidence">Period of Residence</label>
+            </div>
+            <div class="value" id="periodOfResidence">10 years</div>
+            <div class="line"></div>
+        </div>
+
+        <div class="form-group">
+            <div class="label-group">
+                <label for="periodOfResidence">පදිංචිව සිටි කාලය ඔප්පු කිරීම සඳහා වෙනත් සාක්ෂිවල ස්වභාවය </label>
+                <label for="periodOfResidence">Period of Residence</label>
+            </div>
+            <div class="value" id="periodOfResidence">10 years</div>
+            <div class="line"></div>
+        </div>
+
+        <div class="form-group">
+            <div class="label-group">
+                <label for="periodOfResidence">ඉල්ලුම්කරු/ඉල්ලුම්කාරිය වරදකරු කර තිබේද?</label>
+                <label for="periodOfResidence">Period of Residence</label>
+            </div>
+            <div class="value" id="periodOfResidence">10 years</div>
+            <div class="line"></div>
+        </div>
+
+        <div class="form-group">
+            <div class="label-group">
+                <label for="periodOfResidence">පොදු වැඩ, සමාජ සේවා වැඩ ආදිය සම්බන්ධයෙන් ඔහු/ඇය උනන්දුවක් දක්වා
+                    තිබේද?</label>
+                <label for="periodOfResidence">Period of Residence</label>
+            </div>
+            <div class="value" id="periodOfResidence">10 years</div>
+            <div class="line"></div>
+        </div>
+
+        <div class="form-group">
+            <div class="label-group">
+                <label for="periodOfResidence">ඔහුගේ/ඇයගේ චරිතය </label>
+                <label for="periodOfResidence">Period of Residence</label>
+            </div>
+            <div class="value" id="periodOfResidence">10 years</div>
+            <div class="line"></div>
+        </div>
+
+        <div class="form-group">
+            <div class="label-group">
+                <label for="remarks">වෙනත් කරුණු</label>
+                <label for="remarks">Remarks</label>
+            </div>
+            <div class="value" id="remarks">None</div>
+            <div class="line"></div>
+        </div>
+
+        <p>
+            ඉහත සඳහන් තොරතුරු මා දන්නා තරමින් නිවැරදි බවත් ඉල්ලුම්කරු/කාරිය ලියාපදිංචි කිරීමෙන්/පරම්පරාවෙන් ශ්‍රී ලංකාවේ
+            පුරවැසියෙකු බවත් ඔහුගේ/ඇයගේ ලියාපදිංචි කිරීමේ සහතිකයෙහි අංකය .............. බවත් එය ...................
+            විසින්
+            නිකුත් කර ඇති බවත් මෙයින් සහතික කරමි.</p>
+
+        <div class="bottom-section">
+            <div class="date">
+
+                <p>..........................<br> දිනය <br> Date</p>
+            </div>
+            <div class="signature">
+                <p>..............................................<br> ග්‍රාම නිලධාරිගේ අත්සන සහ මුද්‍රාව <br>Signature
+                    and seal of Village Officer </p>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="download-button">
+        <button onclick="downloadPDF()">Download as PDF</button>
+    </div>
+
+    <script>
+        function downloadPDF() {
+            var element = document.getElementById('certificate');
+            html2pdf(element, {
+                // margin: 0.5,
+                filename: 'certificate_of_residence_and_character.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2 },
+                jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+            });
+        }
+    </script>
+
+</body>
+
+</html>

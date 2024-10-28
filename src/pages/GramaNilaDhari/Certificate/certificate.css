@@ -1,0 +1,73 @@
+
+h1 {
+    text-align: center;
+    font-size: 20px;
+    font-weight: 100;
+    margin-bottom: 40px;
+}
+
+h2 {
+    text-align: center;
+    font-size: 14px;
+    margin-bottom: 30px;
+    font-weight: normal;
+}
+
+.container {
+    background-color: #fff;
+    padding: 20px;
+    border: 1px solid #ccc;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.form-group {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    position: relative;
+}
+
+.form-group .label-group {
+    width: 35%;
+}
+
+.label-group label {
+    font-weight: 100;
+    font-size: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+
+}
+
+.value {
+    font-weight: 100;
+    width: 60%;
+    padding: 5px;
+    text-align: left;
+}
+
+.line {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: #000;
+}
+
+/* To align items side by side in the same row */
+.form-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    border-bottom: 1px solid black;
+}
+
+.form-row .form-group {
+    position: relative;
+    flex: 0 0 48%;
+    /* Adjust the width to make two fields fit side by side */
+}

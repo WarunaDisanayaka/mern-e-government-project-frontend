@@ -12,20 +12,69 @@ const CharacterCertificate = () => {
     const [fatherName, setFatherName] = useState('');
     const [fatherAddress, setFatherAddress] = useState('');
     const [religion, setReligion] = useState('');
-    const [gender, setGender] = useState('');
-    const [isSriLankan, setIsSriLankan] = useState(true);
+    const [age, setAge] = useState('');
+    const [civilStatus, setCivilStatus] = useState('');
+    const [isSriLankan, setIsSriLankan] = useState('');
+    const [occupation, setOccupation] = useState('');
+    const [sinceWhen, setSinceWhen] = useState('');
+    const [purposeOfCertificate, setPurposeOfCertificate] = useState('');
+    const [signature, setSignature] = useState('');
     const [district, setDistrict] = useState('');
     const [divisionalSecDivision, setDivisionalSecDivision] = useState('');
     const [gnDivision, setGnDivision] = useState('');
     const [knownToGn, setKnownToGn] = useState('');
-    const [sinceWhen, setSinceWhen] = useState('');
-    const [civilStatus, setCivilStatus] = useState('');
-    const [occupation, setOccupation] = useState('');
+    const [sinceWhenGn, setSinceWhenGn] = useState('');
+    const [natureOfEvidence, setNatureOfEvidence] = useState('');
+    const [hasRecord, setHasRecord] = useState('');
+    const [publicInterest, setPublicInterest] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
+    const [searchNIC, setSearchNIC] = useState('');
+    const [gender, setGender] = useState('');
     const [periodOfResidence, setPeriodOfResidence] = useState('');
     const [purpose, setPurpose] = useState('');
     const [remarks, setRemarks] = useState('');
-    const [searchNIC, setSearchNIC] = useState('');
-    const [errorMessage, setErrorMessage] = useState('');
+    const [character, setCharacter] = useState('');
+    const [IfSo, setIfSo] = useState('')
+
+
+    const handleGeneratePDF = () => {
+        // Collect the data from state
+        const certificateData = {
+            fullName,
+            address,
+            nic,
+            fatherName,
+            fatherAddress,
+            religion,
+            age,
+            civilStatus,
+            isSriLankan,
+            occupation,
+            sinceWhen,
+            purposeOfCertificate,
+            district,
+            divisionalSecDivision,
+            gnDivision,
+            knownToGn,
+            sinceWhenGn,
+            natureOfEvidence,
+            hasRecord,
+            publicInterest,
+            searchNIC,
+            gender,
+            periodOfResidence,
+            purpose,
+            remarks,
+            character,
+            IfSo
+        };
+
+        // Use this data to populate the HTML
+        window.open(`certificate.html?${new URLSearchParams(certificateData)}`);
+        console.log(certificateData)
+    };
+
+
 
     const handleSearch = async (e) => {
         e.preventDefault();
@@ -60,74 +109,6 @@ const CharacterCertificate = () => {
     };
 
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-
-        const doc = new jsPDF();
-
-        // Add the font to the PDF
-        doc.addFileToVFS("NotoSansSinhala-Thin.ttf", font);
-        doc.addFont("NotoSansSinhala-Thin.ttf", "NotoSansSinhala-Thin", "normal");
-        doc.setFont("NotoSansSinhala-Thin");
-
-        // Title and basic setup
-        doc.setFontSize(16);
-        doc.text('Certificate of Residence and Character', 105, 10, { align: 'center' });
-        doc.setFontSize(10);
-        doc.text('Issued by Grama Niladhari', 105, 15, { align: 'center' });
-
-        // Define the line height and starting y-position
-        let lineHeight = 8;
-        let yPosition = 30;
-
-        // Helper function to draw labeled text with aligned boxes
-        const drawLabeledText = (label, value, xLabel, xValue, y) => {
-            doc.text(`${label}:`, xLabel, y);
-            doc.text(value, xValue, y);
-            doc.line(10, y + 2, 200, y + 2); // Draws a horizontal line after each field
-        };
-
-        // Content starts here, following the structure of the form
-        drawLabeledText('සම්පූර්ණ නම ', fullName, 10, 60, yPosition);
-        yPosition += lineHeight;
-        drawLabeledText('ලිපිනය', address, 10, 60, yPosition);
-        yPosition += lineHeight;
-        drawLabeledText('ජාතික හැදුනුම්පත් අංකය', nic, 10, 60, yPosition);
-        yPosition += lineHeight;
-        drawLabeledText("Father's Name", fatherName, 10, 60, yPosition);
-        yPosition += lineHeight;
-        drawLabeledText("Father's Address", fatherAddress, 10, 60, yPosition);
-        yPosition += lineHeight;
-        drawLabeledText('Religion', religion, 10, 60, yPosition);
-        yPosition += lineHeight;
-        drawLabeledText('Gender', gender, 10, 60, yPosition);
-        yPosition += lineHeight;
-        drawLabeledText('Is Sri Lankan', isSriLankan ? 'Yes' : 'No', 10, 60, yPosition);
-        yPosition += lineHeight;
-        drawLabeledText('District', district, 10, 60, yPosition);
-        yPosition += lineHeight;
-        drawLabeledText("Divisional Secretary's Division", divisionalSecDivision, 10, 60, yPosition);
-        yPosition += lineHeight;
-        drawLabeledText('Grama Niladhari Division and Number', gnDivision, 10, 73, yPosition);
-        yPosition += lineHeight;
-        drawLabeledText('Personally Known to GN', knownToGn, 10, 60, yPosition);
-        yPosition += lineHeight;
-        drawLabeledText('Since When', sinceWhen, 10, 60, yPosition);
-        yPosition += lineHeight;
-        drawLabeledText('Civil Status', civilStatus, 10, 60, yPosition);
-        yPosition += lineHeight;
-        drawLabeledText('Occupation', occupation, 10, 60, yPosition);
-        yPosition += lineHeight;
-        drawLabeledText('Period of Residence', periodOfResidence, 10, 60, yPosition);
-        yPosition += lineHeight;
-        drawLabeledText('Purpose of Certificate', purpose, 10, 60, yPosition);
-        yPosition += lineHeight;
-        drawLabeledText('Remarks', remarks, 10, 60, yPosition);
-
-        // Final Save
-        doc.save('user_details_form_style.pdf');
-    };
-
     return (
         <div id="page-top">
             <div id="wrapper">
@@ -158,6 +139,7 @@ const CharacterCertificate = () => {
                                                         value={searchNIC}
                                                         onChange={(e) => setSearchNIC(e.target.value)}
                                                         placeholder="Enter NIC"
+
                                                     />
                                                 </div>
                                                 <button type="submit" className="btn btn-primary mb-4">Search</button>
@@ -168,7 +150,7 @@ const CharacterCertificate = () => {
                                             )}
 
                                             {/* Main Form */}
-                                            <form onSubmit={handleSubmit}>
+                                            <form onSubmit={handleGeneratePDF}>
                                                 <div className="row">
                                                     {/* Column 1 */}
                                                     <div className="col-lg-6">
@@ -195,7 +177,7 @@ const CharacterCertificate = () => {
                                                             />
                                                         </div>
                                                         <div className="form-group">
-                                                            <label htmlFor="nic">NIC <br />ජාතික හැදුනුම්පත් අංකය </label>
+                                                            <label htmlFor="nic">NIC <br /> ජාතික හැදුනුම්පත් අංකය </label>
                                                             <input
                                                                 type="text"
                                                                 className="form-control"
@@ -238,22 +220,67 @@ const CharacterCertificate = () => {
                                                                 placeholder="Enter Religion"
                                                             />
                                                         </div>
+                                                        <div className="form-group">
+                                                            <label htmlFor="age">Age <br /> වයස</label>
+                                                            <input
+                                                                type="number"
+                                                                className="form-control"
+                                                                id="age"
+                                                                value={age}
+                                                                onChange={(e) => setAge(e.target.value)}
+                                                                placeholder="Enter Age"
+                                                            />
+                                                        </div>
+                                                        <div className="form-group">
+                                                            <label htmlFor="civilStatus">Civil Status <br /> විවාහක/අවිවාහක බව</label>
+                                                            <input
+                                                                type="text"
+                                                                className="form-control"
+                                                                id="civilStatus"
+                                                                value={civilStatus}
+                                                                onChange={(e) => setCivilStatus(e.target.value)}
+                                                                placeholder="Enter Civil Status"
+                                                            />
+                                                        </div>
+                                                        <div className="form-group">
+                                                            <label htmlFor="sinceWhen">Since When <br /> ගමේ පදිංචි කාලය</label>
+                                                            <input
+                                                                type="text"
+                                                                className="form-control"
+                                                                id="sinceWhen"
+                                                                value={sinceWhenGn}
+                                                                onChange={(e) => setSinceWhenGn(e.target.value)}
+                                                                placeholder="Enter Since When"
+                                                            />
+                                                        </div>
+                                                        <div className="form-group">
+                                                            <label htmlFor="purposeOfCertificate">Purpose of Certificate <br /> සහතිකය අවශ්‍ය කරන කාරණය</label>
+                                                            <input
+                                                                type="text"
+                                                                className="form-control"
+                                                                id="purposeOfCertificate"
+                                                                value={purposeOfCertificate}
+                                                                onChange={(e) => setPurposeOfCertificate(e.target.value)}
+                                                                placeholder="Enter Purpose of Certificate"
+                                                            />
+                                                        </div>
+                                                        <div className="form-group">
+                                                            <label htmlFor="purposeOfCertificate">Other matters <br />වෙනත් කරුණු </label>
+                                                            <input
+                                                                type="text"
+                                                                className="form-control"
+                                                                id="purposeOfCertificate"
+                                                                value={remarks}
+                                                                onChange={(e) => setRemarks(e.target.value)}
+                                                                placeholder="Enter other matters"
+                                                            />
+                                                        </div>
+
                                                     </div>
                                                     {/* Column 2 */}
                                                     <div className="col-lg-6">
                                                         <div className="form-group">
-                                                            <label htmlFor="gender">Gender <br /> ස්ත්‍රී/පුරුෂ භාවය </label>
-                                                            <input
-                                                                type="text"
-                                                                className="form-control"
-                                                                id="gender"
-                                                                value={gender}
-                                                                onChange={(e) => setGender(e.target.value)}
-                                                                placeholder="Enter Gender"
-                                                            />
-                                                        </div>
-                                                        <div className="form-group">
-                                                            <label htmlFor="district">District <br />දිස්ත්‍රික්කය</label>
+                                                            <label htmlFor="district">District <br /> දිස්ත්‍රික්කය</label>
                                                             <input
                                                                 type="text"
                                                                 className="form-control"
@@ -264,7 +291,7 @@ const CharacterCertificate = () => {
                                                             />
                                                         </div>
                                                         <div className="form-group">
-                                                            <label htmlFor="divisionalSecDivision">Divisional Secretary's Division <br />ප්‍රාදේශීය ලේකම් කොට්ඨාශය</label>
+                                                            <label htmlFor="divisionalSecDivision">Divisional Secretary's Division <br /> ප්‍රාදේශීය ලේකම් කොට්ඨාශය</label>
                                                             <input
                                                                 type="text"
                                                                 className="form-control"
@@ -275,7 +302,7 @@ const CharacterCertificate = () => {
                                                             />
                                                         </div>
                                                         <div className="form-group">
-                                                            <label htmlFor="gnDivision">GN Division <br />ග්‍රාම නිලධාරි වසම </label>
+                                                            <label htmlFor="gnDivision">Grama Niladhari Division and Number <br /> ග්‍රාම නිලධාරී කොට්ඨාසය සහ අංකය</label>
                                                             <input
                                                                 type="text"
                                                                 className="form-control"
@@ -286,7 +313,7 @@ const CharacterCertificate = () => {
                                                             />
                                                         </div>
                                                         <div className="form-group">
-                                                            <label htmlFor="knownToGn">Known to GN</label>
+                                                            <label htmlFor="knownToGn">Known to GN <br /> ඉල්ලුම්කරු/කාරිය පෞද්ගලිකව හදුනන්නේද?</label>
                                                             <input
                                                                 type="text"
                                                                 className="form-control"
@@ -297,20 +324,100 @@ const CharacterCertificate = () => {
                                                             />
                                                         </div>
                                                         <div className="form-group">
-                                                            <label htmlFor="sinceWhen">Since When</label>
+                                                            <label htmlFor="knownToGn">If So, Since when <br /> හදුනන්නේනම් කොපමණ කලක සිටද?</label>
                                                             <input
                                                                 type="text"
                                                                 className="form-control"
-                                                                id="sinceWhen"
-                                                                value={sinceWhen}
-                                                                onChange={(e) => setSinceWhen(e.target.value)}
-                                                                placeholder="Since When"
+                                                                id="If So, Since when                                                                "
+                                                                value={IfSo}
+                                                                onChange={(e) => setIfSo(e.target.value)}
+                                                                placeholder="If So, Since when                                                                "
                                                             />
                                                         </div>
+                                                        <div className="form-group">
+                                                            <label htmlFor="sinceWhenGn">Grama Niladhari Division Period <br /> ග්‍රාම නිලධාරි කොට්ඨාසයේ පදිංචිව සිටි කාලය</label>
+                                                            <input
+                                                                type="text"
+                                                                className="form-control"
+                                                                id="sinceWhenGn"
+                                                                value={periodOfResidence}
+                                                                onChange={(e) => setPeriodOfResidence(e.target.value)}
+                                                                placeholder="Enter Grama Niladhari Duration"
+                                                            />
+                                                        </div>
+                                                        <div className="form-group">
+                                                            <label htmlFor="natureOfEvidence">Nature of Other Evidence <br /> පදිංචිව සිටි කාලය ඔප්පු කිරීම සඳහා වෙනත් සාක්ෂිවල ස්වභාවය</label>
+                                                            <input
+                                                                type="text"
+                                                                className="form-control"
+                                                                id="natureOfEvidence"
+                                                                value={natureOfEvidence}
+                                                                onChange={(e) => setNatureOfEvidence(e.target.value)}
+                                                                placeholder="Enter Nature of Evidence"
+                                                            />
+                                                        </div>
+                                                        <div className="form-group">
+                                                            <label htmlFor="hasRecord">Has the Applicant Been Convicted? <br /> ඉල්ලුම්කරු/ඉල්ලුම්කාරිය වරදකරු කර තිබේද?</label>
+                                                            <input
+                                                                type="text"
+                                                                className="form-control"
+                                                                id="hasRecord"
+                                                                value={hasRecord}
+                                                                onChange={(e) => setHasRecord(e.target.value)}
+                                                                placeholder="Enter Yes/No"
+                                                            />
+                                                        </div>
+                                                        <div className="form-group">
+                                                            <label htmlFor="publicInterest">Any Public or Social Interest? <br /> පොදු වැඩ, සමාජ සේවා වැඩ ආදිය සම්බන්ධයෙන් ඔහු/ඇය උනන්දුයිද?</label>
+                                                            <input
+                                                                type="text"
+                                                                className="form-control"
+                                                                id="publicInterest"
+                                                                value={publicInterest}
+                                                                onChange={(e) => setPublicInterest(e.target.value)}
+                                                                placeholder="Enter Yes/No"
+                                                            />
+                                                        </div>
+
+                                                        <div className="form-group">
+                                                            <label htmlFor="isSriLankan">Is Sri Lankan <br /> ශ්‍රී ලාංකිකයෙක්ද?</label>
+                                                            <input
+                                                                type="text"
+                                                                className="form-control"
+                                                                id="isSriLankan"
+                                                                value={isSriLankan}
+                                                                onChange={(e) => setIsSriLankan(e.target.value)}
+                                                                placeholder="Enter Yes/No"
+                                                            />
+                                                        </div>
+                                                        <div className="form-group">
+                                                            <label htmlFor="occupation">Occupation <br /> දැනට කරන රස්සාව</label>
+                                                            <input
+                                                                type="text"
+                                                                className="form-control"
+                                                                id="occupation"
+                                                                value={occupation}
+                                                                onChange={(e) => setOccupation(e.target.value)}
+                                                                placeholder="Enter Occupation"
+                                                            />
+                                                        </div>
+                                                        <div className="form-group">
+                                                            <label htmlFor="occupation">His/her character <br /> ඔහුගේ/ඇයගේ චරිතය</label>
+                                                            <input
+                                                                type="text"
+                                                                className="form-control"
+                                                                id="occupation"
+                                                                value={character}
+                                                                onChange={(e) => setCharacter(e.target.value)}
+                                                                placeholder="Enter character nature"
+                                                            />
+                                                        </div>
+
                                                     </div>
                                                 </div>
-                                                <button type="submit" className="btn btn-primary">Download PDF</button>
+                                                <button type="submit" className="btn btn-primary">Submit</button>
                                             </form>
+
                                         </div>
                                     </div>
                                 </div>
