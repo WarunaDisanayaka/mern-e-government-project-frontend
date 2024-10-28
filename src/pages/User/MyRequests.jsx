@@ -3,28 +3,40 @@ import axios from 'axios';
 import SideBar from '../../components/User/SideBar';
 import TopBar from '../../components/User/TopBar';
 
-const MyRequests = () => { // Add userId as a prop
+const MyRequests = () => {
     const [requests, setRequests] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [noData, setNoData] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
     const [selectedRequest, setSelectedRequest] = useState(null);
 
-    // Fetch certification requests by user ID
+    const userId = localStorage.getItem('userId');
+
     useEffect(() => {
-        axios.get(`http://localhost:3001/api/certification-requests/user/1`)
+        axios.get(`http://localhost:3001/api/certification-requests/user/${userId}`)
             .then(response => {
-                setRequests(response.data);
+                if (response.data.message === "No certification requests found for this user.") {
+                    setNoData(true);
+                    setRequests([]);
+                } else {
+                    setRequests(response.data);
+                    setNoData(false);
+                }
                 setLoading(false);
             })
             .catch(err => {
-                setError(err.message);
+                if (!err.response || err.response.status >= 500) {
+                    setError("An error occurred. Please try again later.");
+                } else {
+                    setError(null); // Clear error if it’s a "No data" case
+                }
                 setLoading(false);
             });
-    },);
+    }, [userId]);
 
     const handleUpdateClick = (request) => {
         setSelectedRequest(request);
@@ -70,7 +82,8 @@ const MyRequests = () => { // Add userId as a prop
     );
 
     if (loading) return <div>Loading...</div>;
-    if (error) return <div>Error: {error}</div>;
+    if (error) return <div>{error}</div>;
+    if (noData) return <div>No certification requests found for this user.</div>;
 
     return (
         <div>
@@ -120,7 +133,6 @@ const MyRequests = () => { // Add userId as a prop
                                                         <td>{request.certificate_type}</td>
                                                         <td>{request.reason}</td>
                                                         <td>{request.status}</td>
-
                                                     </tr>
                                                 ))
                                             )}
