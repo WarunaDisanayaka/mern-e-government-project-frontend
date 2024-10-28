@@ -23,6 +23,7 @@ import RequestCertification from './pages/User/RequestCertification';
 import MyRequests from './pages/User/MyRequests';
 import Certificate from './pages/GramaNilaDhari/Certificate/Certificate';
 import IncomeCertificate from './pages/GramaNilaDhari/IncomeCertificate';
+import AllCertificateRequests from './pages/GramaNilaDhari/AllCertificateRequests';
 
 const AppRoutes = () => {
     return (
@@ -47,6 +48,7 @@ const AppRoutes = () => {
                 <Route path="/my-requests" element={<MyRequests />} />
 
                 <Route path="/certificate" element={<Certificate />} />
+                <Route path="/all-certificate-requests" element={<AllCertificateRequests />} />
 
 
                 {/* Protected routes */}

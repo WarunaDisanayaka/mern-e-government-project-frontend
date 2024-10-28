@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Signup = () => {
@@ -9,6 +11,9 @@ const Signup = () => {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
+
+    const navigate = useNavigate();
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -50,6 +55,8 @@ const Signup = () => {
                 setPhone('');
                 setPassword('');
                 setConfirmPassword('');
+                navigate('/sign-in');
+
             }
         } catch (error) {
             setErrorMessage("An error occurred. Please try again later.");
@@ -142,6 +149,11 @@ const Signup = () => {
                             Sign Up
                         </button>
                     </form>
+                    <div className="text-center mt-3">
+                        <p>
+                            Already have an account? <Link to="/sign-in">Sign in here</Link>
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>

@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
-import jsPDF from 'jspdf';
 import axios from 'axios';
 import SideBar from '../../components/SideBar';
 import TopBar from '../../components/TopBar';
-import { font } from '../../fonts/font'; // Adjust the path based on your project structure
 
 const IncomeCertificate = () => {
     const [fullName, setFullName] = useState('');
@@ -11,103 +9,53 @@ const IncomeCertificate = () => {
     const [nic, setNic] = useState('');
     const [fatherName, setFatherName] = useState('');
     const [fatherAddress, setFatherAddress] = useState('');
-    const [religion, setReligion] = useState('');
-    const [age, setAge] = useState('');
-    const [civilStatus, setCivilStatus] = useState('');
-    const [isSriLankan, setIsSriLankan] = useState('');
-    const [occupation, setOccupation] = useState('');
-    const [sinceWhen, setSinceWhen] = useState('');
-    const [purposeOfCertificate, setPurposeOfCertificate] = useState('');
-    const [signature, setSignature] = useState('');
-    const [district, setDistrict] = useState('');
-    const [divisionalSecDivision, setDivisionalSecDivision] = useState('');
-    const [gnDivision, setGnDivision] = useState('');
-    const [knownToGn, setKnownToGn] = useState('');
-    const [sinceWhenGn, setSinceWhenGn] = useState('');
-    const [natureOfEvidence, setNatureOfEvidence] = useState('');
-    const [hasRecord, setHasRecord] = useState('');
-    const [publicInterest, setPublicInterest] = useState('');
-    const [errorMessage, setErrorMessage] = useState('');
-    const [searchNIC, setSearchNIC] = useState('');
-    const [gender, setGender] = useState('');
-    const [periodOfResidence, setPeriodOfResidence] = useState('');
-    const [purpose, setPurpose] = useState('');
-    const [remarks, setRemarks] = useState('');
-    const [character, setCharacter] = useState('');
-    const [IfSo, setIfSo] = useState('')
-
+    const [monthlyIncome, setMonthlyIncome] = useState('');
+    const [annualIncome, setAnnualIncome] = useState('');
+    const [incomeSources, setIncomeSources] = useState({
+        properties: '',
+        businesses: '',
+        job: '',
+        vehicles: '',
+        other: '',
+        total: '',
+    });
 
     const handleGeneratePDF = () => {
-        // Collect the data from state
         const certificateData = {
             fullName,
             address,
             nic,
             fatherName,
-            fatherAddress,
-            religion,
-            age,
-            civilStatus,
-            isSriLankan,
-            occupation,
-            sinceWhen,
-            purposeOfCertificate,
-            district,
-            divisionalSecDivision,
-            gnDivision,
-            knownToGn,
-            sinceWhenGn,
-            natureOfEvidence,
-            hasRecord,
-            publicInterest,
-            searchNIC,
-            gender,
-            periodOfResidence,
-            purpose,
-            remarks,
-            character,
-            IfSo
+            monthlyIncome,
+            annualIncome,
+            incomeSources,
         };
-
-        // Use this data to populate the HTML
         window.open(`certificate.html?${new URLSearchParams(certificateData)}`);
-        console.log(certificateData)
+        console.log(certificateData);
     };
-
-
 
     const handleSearch = async (e) => {
         e.preventDefault();
-
-        // Get division_id from local storage
         const divisionId = localStorage.getItem('division_id');
-
         if (!divisionId) {
-            setErrorMessage('Division ID not found in local storage');
+            // setErrorMessage('Division ID not found in local storage');
             return;
         }
-
         try {
-            const response = await axios.get(`http://localhost:3001/api/${searchNIC}/${divisionId}`);
+            const response = await axios.get(`http://localhost:3001/api/${nic}/${divisionId}`);
             const data = response.data;
-
-            // Populate fields only if the data exists in the API response
             if (data) {
                 setFullName(data.full_name || '');
                 setAddress(data.address || '');
                 setNic(data.nic || '');
                 setFatherName(data.father_name || '');
                 setFatherAddress(data.father_address || '');
-                setReligion(data.religion || '');
-                setGender(data.gender || '');
-                setIsSriLankan(data.is_srilankan === 1);
             }
         } catch (error) {
             console.error('Error fetching user data:', error);
-            setErrorMessage('No data found for this NIC');
+            // setErrorMessage('No data found for this NIC');
         }
     };
-
 
     return (
         <div id="page-top">
@@ -117,79 +65,318 @@ const IncomeCertificate = () => {
                     <div id="content">
                         <TopBar />
                         <div className="container-fluid">
-                            <div className="d-sm-flex align-items-center justify-content-between mb-4">
-                                <h1 className="h3 mb-0 text-gray-800">Generate  Income Certifications</h1>
-                            </div>
-
-                            <div className="row">
-                                <div className="col-lg-12">
-                                    <div className="card shadow mb-4">
-                                        <div className="card-header py-3">
-                                            <h6 className="m-0 font-weight-bold text-primary">User Details</h6>
+                            <h1 className="h3 mb-0 text-gray-800">Generate Income Certificate</h1>
+                            <div className="card shadow mb-4">
+                                <div className="card-header py-3">
+                                    <h6 className="m-0 font-weight-bold text-primary">User Details</h6>
+                                </div>
+                                <div className="card-body">
+                                    <form onSubmit={handleSearch}>
+                                        <div className="form-group">
+                                            <label htmlFor="searchNIC">Search by NIC</label>
+                                            <input
+                                                type="text"
+                                                className="form-control"
+                                                id="searchNIC"
+                                                value={nic}
+                                                onChange={(e) => setNic(e.target.value)}
+                                                placeholder="Enter NIC"
+                                            />
                                         </div>
-                                        <div className="card-body">
-                                            {/* Search NIC */}
-                                            <form onSubmit={handleSearch}>
-                                                <div className="form-group">
-                                                    <label htmlFor="searchNIC">Search by NIC</label>
-                                                    <input
-                                                        type="text"
-                                                        className="form-control"
-                                                        id="searchNIC"
-                                                        value={searchNIC}
-                                                        onChange={(e) => setSearchNIC(e.target.value)}
-                                                        placeholder="Enter NIC"
+                                        <button type="submit" className="btn btn-primary mb-4">Search</button>
+                                    </form>
 
-                                                    />
-                                                </div>
-                                                <button type="submit" className="btn btn-primary mb-4">Search</button>
-                                            </form>
-
-                                            {errorMessage && (
-                                                <p className="text-danger">{errorMessage}</p>
-                                            )}
-
-                                            {/* Main Form */}
-                                            <form onSubmit={handleGeneratePDF}>
-                                                <div className="row">
-                                                    {/* Column 1 */}
-                                                    <div className="col-lg-6">
-                                                        <div className="form-group">
-                                                            <label htmlFor="fullName">Full Name  <br /> සම්පූර්ණ නම </label>
-                                                            <input
-                                                                type="text"
-                                                                className="form-control"
-                                                                id="fullName"
-                                                                value={fullName}
-                                                                onChange={(e) => setFullName(e.target.value)}
-                                                                placeholder="Enter Full Name"
-                                                            />
-                                                        </div>
-                                                        <div className="form-group">
-                                                            <label htmlFor="address">Address <br /> ලිපිනය</label>
-                                                            <input
-                                                                type="text"
-                                                                className="form-control"
-                                                                id="address"
-                                                                value={address}
-                                                                onChange={(e) => setAddress(e.target.value)}
-                                                                placeholder="Enter Address"
-                                                            />
-                                                        </div>
-
-
-                                                    </div>
-                                                    {/* Column 2 */}
-                                                    <div className="col-lg-6">
-
-
-                                                    </div>
-                                                </div>
-                                                <button type="submit" className="btn btn-primary">Submit</button>
-                                            </form>
-
+                                    <form onSubmit={handleGeneratePDF}>
+                                        <div className="form-group">
+                                            <label htmlFor="fullName">Full Name / සම්පූර්ණ නම</label>
+                                            <input
+                                                type="text"
+                                                className="form-control"
+                                                id="fullName"
+                                                value={fullName}
+                                                onChange={(e) => setFullName(e.target.value)}
+                                            />
                                         </div>
-                                    </div>
+                                        <div className="form-group">
+                                            <label htmlFor="address">Address / ලිපිනය</label>
+                                            <input
+                                                type="text"
+                                                className="form-control"
+                                                id="address"
+                                                value={address}
+                                                onChange={(e) => setAddress(e.target.value)}
+                                            />
+                                        </div>
+                                        <div className="form-group">
+                                            <label htmlFor="monthlyIncome">Applicant's Monthly Income / අයදුම්කරුගේ මාසික ආදායම</label>
+                                            <input
+                                                type="text"
+                                                className="form-control"
+                                                id="monthlyIncome"
+                                                value={monthlyIncome}
+                                                onChange={(e) => setMonthlyIncome(e.target.value)}
+                                            />
+                                        </div>
+                                        <div className="form-group">
+                                            <label htmlFor="annualIncome">Applicant's Annual Income / අයදුම්කරුගේ වාර්ෂික ආදායම</label>
+                                            <input
+                                                type="text"
+                                                className="form-control"
+                                                id="annualIncome"
+                                                value={annualIncome}
+                                                onChange={(e) => setAnnualIncome(e.target.value)}
+                                            />
+                                        </div>
+
+                                        {/* Income Sources */}
+                                        <div className="form-group">
+                                            <label>Income Sources / ආදායම් ලැබෙන මාර්ග</label>
+                                            <div className="form-group">
+                                                <label htmlFor="properties">From Properties (වගාව)</label>
+                                                <input
+                                                    type="text"
+                                                    className="form-control"
+                                                    id="properties"
+                                                    value={incomeSources.properties}
+                                                    onChange={(e) => setIncomeSources({ ...incomeSources, properties: e.target.value })}
+                                                />
+                                            </div>
+                                            <div className="form-group">
+                                                <label htmlFor="businesses">From Businesses (ව්‍යාපාර)</label>
+                                                <input
+                                                    type="text"
+                                                    className="form-control"
+                                                    id="businesses"
+                                                    value={incomeSources.businesses}
+                                                    onChange={(e) => setIncomeSources({ ...incomeSources, businesses: e.target.value })}
+                                                />
+                                            </div>
+                                            <div className="form-group">
+                                                <label htmlFor="job">From Job (රැකියාව)</label>
+                                                <input
+                                                    type="text"
+                                                    className="form-control"
+                                                    id="job"
+                                                    value={incomeSources.job}
+                                                    onChange={(e) => setIncomeSources({ ...incomeSources, job: e.target.value })}
+                                                />
+                                            </div>
+                                            <div className="form-group">
+                                                <label htmlFor="vehicles">From Vehicles (වාහන)</label>
+                                                <input
+                                                    type="text"
+                                                    className="form-control"
+                                                    id="vehicles"
+                                                    value={incomeSources.vehicles}
+                                                    onChange={(e) => setIncomeSources({ ...incomeSources, vehicles: e.target.value })}
+                                                />
+                                            </div>
+                                            <div className="form-group">
+                                                <label htmlFor="other">Other Sources (වෙනත් ආකාරයන්)</label>
+                                                <input
+                                                    type="text"
+                                                    className="form-control"
+                                                    id="other"
+                                                    value={incomeSources.other}
+                                                    onChange={(e) => setIncomeSources({ ...incomeSources, other: e.target.value })}
+                                                />
+                                            </div>
+                                            <div className="form-group">
+                                                <label htmlFor="other">Total (එකතුව)</label>
+                                                <input
+                                                    type="text"
+                                                    className="form-control"
+                                                    id="other"
+                                                    value={incomeSources.other}
+                                                    onChange={(e) => setIncomeSources({ ...incomeSources, other: e.target.value })}
+                                                />
+                                            </div>
+                                        </div>
+
+                                        <div className="form-group">
+                                            <label>If from property / දේපළ වලින් නම්</label>
+                                            <div className="row">
+                                                <div className="col-md-6">
+                                                    <div className="form-group">
+                                                        <label htmlFor="properties">From Properties (වගාව)</label>
+                                                        <input
+                                                            type="text"
+                                                            className="form-control"
+                                                            id="properties"
+                                                            value={incomeSources.properties}
+                                                            onChange={(e) => setIncomeSources({ ...incomeSources, properties: e.target.value })}
+                                                        />
+                                                    </div>
+                                                </div>
+
+                                                <div className="col-md-6">
+                                                    <div className="form-group">
+                                                        <label htmlFor="other">Total (ප්‍රමාණය)</label>
+                                                        <input
+                                                            type="text"
+                                                            className="form-control"
+                                                            id="other"
+                                                            value={incomeSources.other}
+                                                            onChange={(e) => setIncomeSources({ ...incomeSources, other: e.target.value })}
+                                                        />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div className="form-group">
+                                            <div className="row">
+                                                <div className="col-md-6">
+                                                    <div className="form-group">
+                                                        <label htmlFor="properties">Deed No (ඔප්පු අංකය)</label>
+                                                        <input
+                                                            type="text"
+                                                            className="form-control"
+                                                            id="properties"
+                                                            value={incomeSources.properties}
+                                                            onChange={(e) => setIncomeSources({ ...incomeSources, properties: e.target.value })}
+                                                        />
+                                                    </div>
+                                                </div>
+
+                                                <div className="col-md-6">
+                                                    <div className="form-group">
+                                                        <label htmlFor="other">Owner name (අයිතිකරුගේ නම )</label>
+                                                        <input
+                                                            type="text"
+                                                            className="form-control"
+                                                            id="other"
+                                                            value={incomeSources.other}
+                                                            onChange={(e) => setIncomeSources({ ...incomeSources, other: e.target.value })}
+                                                        />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div className="form-group">
+                                            <label>If from businesses / ව්‍යාපාර වලින් නම් </label>
+
+                                            <div className="row">
+                                                <div className="col-md-6">
+                                                    <div className="form-group">
+                                                        <label htmlFor="properties">Location (පිහිටි ස්ථානය )</label>
+                                                        <input
+                                                            type="text"
+                                                            className="form-control"
+                                                            id="properties"
+                                                            value={incomeSources.properties}
+                                                            onChange={(e) => setIncomeSources({ ...incomeSources, properties: e.target.value })}
+                                                        />
+                                                    </div>
+                                                </div>
+
+                                                <div className="col-md-6">
+                                                    <div className="form-group">
+                                                        <label htmlFor="other">Registration No (ලියාපදිංචි අංකය )</label>
+                                                        <input
+                                                            type="text"
+                                                            className="form-control"
+                                                            id="other"
+                                                            value={incomeSources.other}
+                                                            onChange={(e) => setIncomeSources({ ...incomeSources, other: e.target.value })}
+                                                        />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div className="form-group">
+                                            <label>Nature of Business :- Hotel / Tea Shop / Retail Shop / Pharmacy / Wholesale Trade / Tourist Trade / Fairs / Other <br /> ව්‍යාපාරයේ ස්වභාවය :- හෝටලයක්/ තේ කඩයක් / සිල්ලර කඩයක් / ෆාමසියක් / තොග වෙළදාමක් / සංචාරක වෙළදාමක් / පොළවල් වල / වෙනත්  / ව්‍යාපාර වලින් නම්  </label>
+
+                                            <div className="form-group">
+                                                <input
+                                                    type="text"
+                                                    className="form-control"
+                                                    id="properties"
+                                                    value={incomeSources.properties}
+                                                    onChange={(e) => setIncomeSources({ ...incomeSources, properties: e.target.value })}
+                                                />
+                                            </div>
+                                        </div>
+
+                                        <div className="form-group">
+                                            <label>Amount of sales tax paid for the previous quarter <br /> පසුගිය කාර්තුවට ගෙවා ඇති පිරිවැටුම් බදු මුදල  </label>
+
+                                            <div className="form-group">
+                                                <input
+                                                    type="text"
+                                                    className="form-control"
+                                                    id="properties"
+                                                    value={incomeSources.properties}
+                                                    onChange={(e) => setIncomeSources({ ...incomeSources, properties: e.target.value })}
+                                                />
+                                            </div>
+                                        </div>
+
+                                        <div className="form-group">
+                                            <label>Amount of sales tax paid for the previous quarter <br /> පසුගිය කාර්තුවට ගෙවා ඇති පිරිවැටුම් බදු මුදල  </label>
+
+                                            <div className="form-group">
+                                                <input
+                                                    type="text"
+                                                    className="form-control"
+                                                    id="properties"
+                                                    value={incomeSources.properties}
+                                                    onChange={(e) => setIncomeSources({ ...incomeSources, properties: e.target.value })}
+                                                />
+                                            </div>
+                                        </div>
+
+                                        <div className="form-group">
+                                            <label>If from job / රැකියාවෙන් නම්  </label>
+
+                                            <div className="row">
+                                                <div className="col-md-6">
+                                                    <div className="form-group">
+                                                        <label htmlFor="properties">Location (රැකියාව  )</label>
+                                                        <input
+                                                            type="text"
+                                                            className="form-control"
+                                                            id="properties"
+                                                            value={incomeSources.properties}
+                                                            onChange={(e) => setIncomeSources({ ...incomeSources, properties: e.target.value })}
+                                                        />
+                                                    </div>
+                                                </div>
+
+                                                <div className="col-md-6">
+                                                    <div className="form-group">
+                                                        <label htmlFor="other">Institute (ආයතනය)</label>
+                                                        <input
+                                                            type="text"
+                                                            className="form-control"
+                                                            id="other"
+                                                            value={incomeSources.other}
+                                                            onChange={(e) => setIncomeSources({ ...incomeSources, other: e.target.value })}
+                                                        />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div className="form-group">
+                                            <label>Name of Vehicle Nature of Vehicle - Lorry / Three Wheeler / Van / Tractor / Truck Vehicle Number <br /> වාහන වලින් නම් වාහනයේ ස්වභාවය - ලොරි රථය / ත්‍රී වීලරය / වෑන් රථය / ට්‍රැක්ටරය / ට්‍රක්‌ රථය වාහන අංකය   </label>
+
+                                            <div className="form-group">
+                                                <input
+                                                    type="text"
+                                                    className="form-control"
+                                                    id="properties"
+                                                    value={incomeSources.properties}
+                                                    onChange={(e) => setIncomeSources({ ...incomeSources, properties: e.target.value })}
+                                                />
+                                            </div>
+                                        </div>
+
+
+                                        <button type="submit" className="btn btn-primary">Generate PDF</button>
+                                    </form>
                                 </div>
                             </div>
                         </div>
